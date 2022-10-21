@@ -2034,7 +2034,7 @@ class Util {
       ImageSearch, imageX, imageY, % pos1.x, % pos1.y, % pos2.x, % pos2.y, %image%
       CoordMode, Pixel, %bk%
 
-      if (imageX && imageY) {
+      if (imageX != "" && imageY != "") {
         return { x: imageX, y: imageY }
       }
     }
