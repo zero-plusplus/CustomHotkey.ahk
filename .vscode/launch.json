@@ -1,0 +1,37 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "AutoHotkey Select Debug (Advanced Configuration)",
+      "type": "autohotkey",
+      "request": "launch",
+      "program": "${file}",
+      "runtimeArgs": [
+        "/ErrorStdOut=UTF-8",
+        "/CP65001",
+        "/include",
+        "${ahk:suppressErrorDialog}"
+      ],
+      "args": [],
+      "port": "9002-9010",
+      "variableCategories": "recommend",
+      "useDebugDirective": true,
+      "useAutoJumpToError": true,
+      "useAnnounce": "detail",
+      "usePerfTips": true,
+      "skipFunctions": [
+        "${ahk:suppressErrorDialog}",
+        "*.__CALL",
+      ],
+      "openFileOnExit": "${file}",
+      "internalConsoleOptions": "openOnFirstSessionStart"
+    },
+    {
+      "name": "AutoHotkey Pinned File Debug",
+      "type": "autohotkey",
+      "request": "launch",
+      "program": "${ahk:pinnedFile}",
+      "extends": "AutoHotkey Select Debug (Advanced Configuration)"
+    },
+  ]
+}

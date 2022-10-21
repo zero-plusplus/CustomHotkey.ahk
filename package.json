@@ -1,0 +1,30 @@
+{
+  "name": "customhotkey.ahk",
+  "version": "0.0.0",
+  "description": "CustomHotkey is a library for AutoHotkey that can define complex hotkeys (or simulate remap) with extensible Action and Condition.",
+  "homepage": "https://github.com/zero-plusplus/CustomHotkey.ahk#readme",
+  "bugs": {
+    "url": "https://github.com/zero-plusplus/CustomHotkey.ahk/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zero-plusplus/CustomHotkey.ahk.git"
+  },
+  "license": "MIT",
+  "author": "zero-plusplus",
+  "scripts": {
+    "build": "ts-node script/build.ts"
+  },
+  "devDependencies": {
+    "@types/del": "^4.0.0",
+    "@types/fs-extra": "^9.0.13",
+    "@types/mkdirp": "^1.0.2",
+    "@zero-plusplus/autohotkey-utilities": "github:zero-plusplus/node-autohotkey-utilities#develop",
+    "@zero-plusplus/eslint-my-rules": "github:zero-plusplus/eslint-my-rules",
+    "del": "^6.1.1",
+    "experimental-autohotkey-testframework": "github:zero-plusplus/experimental-autohotkey-testframework#develop",
+    "fs-extra": "^10.1.0",
+    "mkdirp": "^1.0.4",
+    "ts-node": "^10.2.1"
+  }
+}
