@@ -87,7 +87,6 @@ class PressEventCombiAction extends CustomHotkey.ActionBase {
   call() {
     data := this.data
 
-    CustomHotkey.Util.blockUserInput(true)
     if (data.nodelay) {
       this.executeAction(data.single, this.prevAction)
     }
@@ -108,6 +107,7 @@ class PressEventCombiAction extends CustomHotkey.ActionBase {
       if (CustomHotkey.Util.isEmpty(data.long)) {
         trigger.waitRelease()
       }
+
       if (data.nodelay) {
         if (this._isDoublePress(trigger.key, data.timeout_double)) {
           action := data.double
@@ -123,9 +123,10 @@ class PressEventCombiAction extends CustomHotkey.ActionBase {
       action := data.single
     }
 
-    this.executeAction(action)
+    if (!(data.nodelay && action == data.single)  && CustomHotkey.Util.isNonEmpty(action)) {
+      this.executeAction(action)
+    }
     trigger.waitRelease()
-    CustomHotkey.Util.blockUserInput(false)
   }
   /**
    * Determine if the specified key is pressed and held.
