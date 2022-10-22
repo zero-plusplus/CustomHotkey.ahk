@@ -13,14 +13,17 @@
   "license": "MIT",
   "author": "zero-plusplus",
   "scripts": {
-    "build": "ts-node script/build.ts"
+    "build": "ts-node script/build.ts",
+    "dist": "ts-node script/dist.ts"
   },
   "devDependencies": {
+    "@types/archiver": "^5.3.1",
     "@types/del": "^4.0.0",
     "@types/fs-extra": "^9.0.13",
     "@types/mkdirp": "^1.0.2",
     "@zero-plusplus/autohotkey-utilities": "github:zero-plusplus/node-autohotkey-utilities#develop",
     "@zero-plusplus/eslint-my-rules": "github:zero-plusplus/eslint-my-rules",
+    "archiver": "^5.3.1",
     "del": "^6.1.1",
     "experimental-autohotkey-testframework": "github:zero-plusplus/experimental-autohotkey-testframework#develop",
     "fs-extra": "^10.1.0",

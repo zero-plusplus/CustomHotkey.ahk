@@ -1,6 +1,3 @@
-import { build, clean } from './subtask/build';
+import { build } from './subtask/build';
 
-(async(): Promise<void> => {
-  await clean();
-  await build();
-})();
+build();

@@ -12,7 +12,7 @@ const buildDirPath = path.resolve(`${__dirname}`, '../..', 'build');
 export const clean = async(): Promise<void> => {
   await del(buildDirPath);
 };
-export const build = async(): Promise<void> => {
+export const buildOnly = async(): Promise<void> => {
   await mkdirp(buildDirPath);
 
   for await (const data of [ { version: '1.0', extension: 'ahk' } /* { version: '2.0', extension: 'ahk2' } */ ]) {
@@ -24,4 +24,8 @@ export const build = async(): Promise<void> => {
   }
 
   // copySync(`${srcDirPath}/addon`, `${buildDirPath}/addon`)
+};
+export const build = async(): Promise<void> => {
+  await clean();
+  await buildOnly();
 };
