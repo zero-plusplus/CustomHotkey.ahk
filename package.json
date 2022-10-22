@@ -14,6 +14,7 @@
   "author": "zero-plusplus",
   "scripts": {
     "build": "ts-node script/build.ts",
+    "clean": "ts-node script/clean.ts",
     "dist": "ts-node script/dist.ts"
   },
   "devDependencies": {
