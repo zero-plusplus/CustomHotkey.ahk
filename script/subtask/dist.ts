@@ -55,6 +55,7 @@ export const distPackForV1 = async(): Promise<void> => {
     path.resolve(distDirPath, 'CustomHotkey+README'),
     [
       path.resolve(path.resolve(rootDir, 'image')),
+      path.resolve(rootDir, 'CHANGELOG.md'),
       path.resolve(rootDir, 'README.md'),
       path.resolve(rootDir, 'README.ja.md'),
     ],

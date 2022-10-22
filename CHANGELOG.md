@@ -5,13 +5,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog][Keep a Changelog] and this project adheres to [Semantic Versioning][Semantic Versioning].
 
-## [Unreleased]
+## \[Unreleased]
 If you want to see what the next version of the plan is, check out the [here](https://github.com/zero-plusplus/CustomHotkey.ahk/labels/milestone).
 Also want to check the development status, check the [commit history](https://github.com/zero-plusplus/CustomHotkey.ahk/commits/develop) of the develop branch.
 
 ---
 
-## [Released]
+## \[Released]
 
 
 ## [0.0.0] - 202x-xx-xx
