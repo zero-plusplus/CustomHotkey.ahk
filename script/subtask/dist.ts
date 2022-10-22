@@ -5,6 +5,8 @@ import * as mkdirp from 'mkdirp';
 import { build } from './build';
 import * as archiver from 'archiver';
 
+const { stat } = fs.promises;
+
 const rootDir = path.join(__dirname, '../../');
 const distDirPath = path.resolve(rootDir, 'dist');
 
@@ -21,7 +23,13 @@ const zip = async(srcDir: string, destDir: string, additionalFiles: string[] = [
   archive.pipe(output);
 
   archive.glob('*.*', { cwd: srcDir });
-  for (const file of additionalFiles) {
+  for await (const file of additionalFiles) {
+    if ((await stat(file)).isDirectory()) {
+      const name = path.basename(file);
+      archive.directory(file, name);
+      continue;
+    }
+
     const fileName = path.basename(file);
     const dir = path.dirname(file);
     archive.glob(fileName, { cwd: dir });
@@ -37,6 +45,7 @@ export const distForV1 = async(): Promise<void> => {
     path.resolve(rootDir, 'build'),
     path.resolve(distDirPath, 'CustomHotkey'),
     [
+      path.resolve(path.resolve(rootDir, 'image')),
       path.resolve(rootDir, 'README.md'),
       path.resolve(rootDir, 'README.ja.md'),
     ],

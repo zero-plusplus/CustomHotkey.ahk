@@ -5,6 +5,7 @@ This document has been translated by [DeepL Translator](https://www.deepl.com/tr
 * [Attention: Use in Games](#attention-use-in-games)
 * [Notes and User Support](#notes-and-user-support)
 * [Support for developer](#support-for-developer)
+* [Installation](#installation)
 * [Docs](#docs)
   * [First](#first)
   * [Customhotkey Interface](#customhotkey-interface)
@@ -123,6 +124,16 @@ If you like this library, I would appreciate it if you would support it with [do
 
 The development is created as a personal hobby, and I do not accept pull requests.
 Instead, I accept feature requests and bug reports at [Issues](https://github.com/zero-plusplus/CustomHotkey.ahk/issues).
+
+# Installation
+1. Download the installer of [AutoHotkey](https://www.autohotkey.com/). Even if you have already installed it, recommend reinstalling it to make sure the following option is set
+
+2. Run the installer and a window will appear. At this time, **MUST** check the `Default to UTF-8` in the `options` tab to install
+![installation1](image/installation1.jpg)
+
+3. Download the this library at [here](https://github.com/zero-plusplus/CustomHotkey.ahk/releases)
+
+4. Then place the library in a folder of your choice and include it in your scripts using the [#Include](https://www.autohotkey.com/docs/commands/_Include.htm) directive
 
 # Docs
 ## First

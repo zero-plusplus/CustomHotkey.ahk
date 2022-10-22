@@ -3,6 +3,7 @@
 * [注意喚起: ゲームでの使用について](#注意喚起-ゲームでの使用について)
 * [注意書きとユーザサポート](#注意書きとユーザサポート)
 * [開発者へのサポート](#開発者へのサポート)
+* [インストール](#インストール)
 * [ドキュメント](#ドキュメント)
   * [最初に](#最初に)
   * [CustomHotkeyのインターフェイス](#customhotkeyのインターフェイス)
@@ -121,6 +122,16 @@ new CustomHotkey(">+>^F5|F", "{Reload|R}{A_ScriptName}を再起動します").on
 
 開発は個人的な趣味で作成されておりプルリクエストは受け付けていませんが、
 代わりに[Issues](https://github.com/zero-plusplus/CustomHotkey.ahk/issues)にて機能リクエストやバグ報告を受け付けています。
+
+# インストール
+1. [AutoHotkey](https://www.autohotkey.com/)のインストーラをダウンロードします。既にインストールされている方も次のオプションが設定されているかどうか確認するために再インストールすることをおすすめします
+
+2. インストーラを実行するとウィンドウが表示されます。このとき`options`タブの中にある`Default to UTF-8`に**必ず**チェックしてインストールしてください。
+![installation1](image/installation1.jpg)
+
+3. ライブラリ本体を[ここ](https://github.com/zero-plusplus/CustomHotkey.ahk/releases)でダウンロードします
+
+4. その後好きなフォルダにライブラリを配置し、[#Include](https://www.autohotkey.com/docs/commands/_Include.htm)ディレクティブを使ってスクリプトにインクルードします
 
 # ドキュメント
 ## 最初に
