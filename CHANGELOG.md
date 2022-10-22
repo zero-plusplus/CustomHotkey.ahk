@@ -14,7 +14,7 @@ Also want to check the development status, check the [commit history](https://gi
 ## \[Released]
 
 
-## [0.0.0] - 202x-xx-xx
+## [0.0.1] - 2022-10-22
 First released
 
 ---
@@ -24,4 +24,4 @@ First released
 [Semantic Versioning]: https://semver.org/
 
 <!-- Versions -->
-[0.0.0]: https://github.com/zero-plusplus/CustomHotkey.ahk/tree/v0.0.0
+[0.0.1]: https://github.com/zero-plusplus/CustomHotkey.ahk/tree/v0.0.1
