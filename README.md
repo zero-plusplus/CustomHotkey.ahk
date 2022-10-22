@@ -3,7 +3,7 @@ This document has been translated by [DeepL Translator](https://www.deepl.com/tr
 # TOC
 * [Overview](#overview)
 * [Attention: Use in Games](#attention-use-in-games)
-* [Notes and User Support](#notes-and-user-support)
+* [Notes](#notes)
 * [Support for developer](#support-for-developer)
 * [Installation](#installation)
 * [Docs](#docs)
@@ -80,7 +80,7 @@ The version under development takes the form `0.x.y`, where `x` represents a des
 
 If you want to see the changes, please see [CHANGELOG](CHANGELOG.md).
 
-# Notes and User Support
+# Notes
 Some of the [Actions](#action) in this library use tricky processing to implement their features.
 
 For example, the [ExtraPressCombiAction](#extrapresscombiaction), which defines a hotkey with three or more keys, temporarily blocks user input and changes the priority of other hotkeys to the lowest.
