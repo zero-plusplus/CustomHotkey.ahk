@@ -7,7 +7,7 @@ import { AhkVersion, IncludeInliner } from '@zero-plusplus/autohotkey-utilities'
 
 const libName = 'CustomHotkey';
 const srcDirPath = path.resolve(`${__dirname}`, '../..', 'src');
-const buildDirPath = path.resolve(`${__dirname}`, '../..', 'build');
+export const buildDirPath = path.resolve(`${__dirname}`, '../..', 'build');
 
 export const clean = async(): Promise<void> => {
   await del(buildDirPath);
