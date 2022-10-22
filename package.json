@@ -29,6 +29,7 @@
     "experimental-autohotkey-testframework": "github:zero-plusplus/experimental-autohotkey-testframework#develop",
     "fs-extra": "^10.1.0",
     "mkdirp": "^1.0.4",
+    "pkginfo": "^0.4.1",
     "ts-node": "^10.2.1"
   }
 }

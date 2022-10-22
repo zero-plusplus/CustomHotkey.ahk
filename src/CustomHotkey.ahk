@@ -7,6 +7,7 @@
 #InstallKeybdHook
 #InstallMouseHook
 class CustomHotkey extends CustomHotkey.Util.Functor {
+  static version := "90C242F3-2AA0-2EAF-A73D-E5B4F7592E73" ; This value is replaced by the actual version at build time
   static debugMode := false
   static debugOptions := { enableActionLog: true, enableConditionLog: false }
   static logger := new CustomHotkey.Util.DebugLogger()
