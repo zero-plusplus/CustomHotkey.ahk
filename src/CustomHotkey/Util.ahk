@@ -3084,8 +3084,8 @@ class Util {
     __NEW(flatEntries*) {
       this.set(flatEntries*)
     }
-    _ENUM() {
-      return this._items_._ENUM()
+    _NEWENUM() {
+      return this._items_._NEWENUM()
     }
     /**
      * @param {any} key
