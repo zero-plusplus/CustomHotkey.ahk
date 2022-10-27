@@ -1,6 +1,6 @@
 ﻿class Group {
   isRegistered := false
-  prevEnabledMap := {}
+  prevEnabledMap := ""
   enabled := false
   _items := []
   __GET(keys*) {
@@ -127,9 +127,11 @@
    * @return {callable}
    */
   tempOff() {
-    this.prevEnabledMap := this.getCurrentStateMap()
-    this.off()
-    return ObjBindMethod(this, "revert", this.prevEnabledMap)
+    if (CustomHotkey.Util.isEmpty(this.prevEnabledMap)) {
+      this.prevEnabledMap := this.getCurrentStateMap()
+      this.off()
+    }
+    return ObjBindMethod(this, "revert", prevEnabledMap)
   }
   /**
    * Revert the state of group.
