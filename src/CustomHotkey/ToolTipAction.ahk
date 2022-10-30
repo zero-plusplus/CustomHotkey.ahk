@@ -32,12 +32,13 @@
 
       data := { tooltip: RegExReplace(data, prefixRegex, "") }
       if (match.options) {
-        optionDefinitionMap := { "R": { name: "replace", type: "boolean" }
-                               , "T": { name: "displayTime", type: "time" }
-                               , "X": { name: "x", type: "number" }
-                               , "Y": { name: "y", type: "number" }
-                               , "O": { name: "origin", type: "string" }
-                               , "I": { name: "id", type: "number" } }
+        defaultOptions := CustomHotkey.ToolTipAction.defaultOptions
+        optionDefinitionMap := { "R": { name: "replace", type: "boolean", default: defaultOptions.replace }
+                               , "T": { name: "displayTime", type: "time", default: defaultOptions.displayTime }
+                               , "X": { name: "x", type: "number", default: defaultOptions.x }
+                               , "Y": { name: "y", type: "number", default: defaultOptions.y }
+                               , "O": { name: "origin", type: "string", default: defaultOptions.origin }
+                               , "I": { name: "id", type: "number", default: defaultOptions.id } }
         options := CustomHotkey.Util.parseOptionsString(match.options, optionDefinitionMap)
         data := this.setDefaultOptions(data, options)
       }

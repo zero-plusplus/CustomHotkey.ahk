@@ -990,7 +990,9 @@ class Util {
     parsed := {}
     for name, def in defMap {
       names := StrSplit(def.name, ".")
-      parsed[names*] := def.default
+      if (ObjHasKey(def, "default")) {
+        parsed[names*] := def.default
+      }
     }
 
     for i, option in StrSplit(options, " ") {
@@ -2129,9 +2131,9 @@ class Util {
           ? { active: RegExReplace(data, prefixRegex, "") }
           : { exist: RegExReplace(data, prefixRegex, "") }
         if (match.options != "") {
-          optionDefinitionMap := { "I": { name: "ignoreCase", type: "boolean" }
-                                 , "M": { name: "matchMode", type: "string" }
-                                 , "D": { name: "detectHidden", type: "string" } }
+          optionDefinitionMap := { "I": { name: "ignoreCase", type: "boolean", default: false }
+                                 , "M": { name: "matchMode", type: "string", default: "" }
+                                 , "D": { name: "detectHidden", type: "string", default: false } }
           options := CustomHotkey.Util.parseOptionsString(match.options, optionDefinitionMap)
           data := CustomHotkey.Util.deepDefaultsObject(data, options)
         }
