@@ -26,7 +26,7 @@
       prefixRegex := CustomHotkey.TrayTipAction.prefixRegex
       match := CustomHotkey.Util.regexMatch(data, prefixRegex)
       if (!match) {
-        return this.setDefaultOptions({ tooltip: data })
+        return this.setDefaultOptions({ traytip: data })
       }
 
       data := { traytip: RegExReplace(data, prefixRegex, "") }
