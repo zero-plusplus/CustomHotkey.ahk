@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @author zero-plusplus (https://github.com/zero-plusplus)
  * @repository https://github.com/zero-plusplus/CustomHotkey.ahk
  * @license MIT
@@ -37,7 +37,7 @@ class CustomHotkey extends CustomHotkey.Util.Functor {
   __NEW(trigger, action, condition := "", hooks := "") {
     triggerAndOptions := StrSplit(trigger, "|")
     rawTrigger := CustomHotkey.CustomLabel.replace(triggerAndOptions[1])
-    rawOptions := trigerAndOptions[2]
+    rawOptions := triggerAndOptions[2]
 
     this.trigger := new CustomHotkey.Trigger(rawTrigger)
     CustomHotkey.registeredHotkeys.add(this)
