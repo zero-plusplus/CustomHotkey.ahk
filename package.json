@@ -1,6 +1,6 @@
 {
   "name": "customhotkey.ahk",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "CustomHotkey is a library for AutoHotkey that can define complex hotkeys (or simulate remap) with extensible Action and Condition.",
   "homepage": "https://github.com/zero-plusplus/CustomHotkey.ahk#readme",
   "bugs": {
