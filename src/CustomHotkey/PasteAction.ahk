@@ -29,8 +29,9 @@
 
       data := { paste: RegExReplace(data, prefixRegex, "") }
       if (match.options) {
-        optionDefinitionMap := { "R": { name: "replace", type: "boolean" }
-                               , "C": { name: "restoreClipboard", type: "time" } }
+        defaultOptions := CustomHotkey.PasteAction.defaultOptions
+        optionDefinitionMap := { "R": { name: "replace", type: "boolean", default: defaultOptions.replace }
+                               , "C": { name: "restoreClipboard", type: "time", default: defaultOptions.restoreClipboard } }
         options := CustomHotkey.Util.parseOptionsString(match.options, optionDefinitionMap)
         data := this.setDefaultOptions(data, options)
       }

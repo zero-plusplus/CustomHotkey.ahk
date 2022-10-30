@@ -29,11 +29,12 @@
       data := { exit: RegExReplace(data, prefixRegex, "") }
       data.mode := match.mode
       if (match.options != "") {
-        optionDefinitionMap := { "X": { name: "tip.x", type: "number" }
-                               , "Y": { name: "tip.y", type: "number" }
-                               , "O": { name: "tip.origin", type: "string" }
-                               , "T": { name: "tip.displayTime", type: "time" }
-                               , "R": { name: "replace", type: "boolean" } }
+        defaultOptions := CustomHotkey.ExitAction.defaultOptions
+        optionDefinitionMap := { "X": { name: "tip.x", type: "number", default: defaultOptions.tip.x }
+                               , "Y": { name: "tip.y", type: "number", default: defaultOptions.tip.y }
+                               , "O": { name: "tip.origin", type: "string", default: defaultOptions.tip.origin }
+                               , "T": { name: "tip.displayTime", type: "time", default: defaultOptions.tip.displayTime }
+                               , "R": { name: "replace", type: "boolean", default: defaultOptions.replace } }
         options := CustomHotkey.Util.parseOptionsString(match.options, optionDefinitionMap)
         data := this.setDefaultOptions(data, options)
       }

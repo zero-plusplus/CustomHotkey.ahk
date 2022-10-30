@@ -3,7 +3,7 @@
                            , mode: "Event"
                            , ime: ""
                            , sendLevel: ""
-                           , keyDelay: ""
+                           , delay: ""
                            , pressDuration: ""
                            , limitLength: 50
                            , allowMultiline: false }
@@ -35,12 +35,13 @@
       data := { send: RegExReplace(data, prefixRegex, "") }
       data.mode := match.mode
       if (match.options != "") {
-        optionDefinitionMap := { "I": { name: "ime", type: "time" }
-                               , "S": { name: "sendLevel", type: "number" }
-                               , "D": { name: "delay", type: "number" }
-                               , "P": { name: "pressDuration", type: "number" }
-                               , "L": { name: "limitLength", type: "number" }
-                               , "M": { name: "allowMultiline", type: "boolean" } }
+        defaultOptions := CustomHotkey.SendAction.defaultOptions
+        optionDefinitionMap := { "I": { name: "ime", type: "time", default: defaultOptions.ime }
+                               , "S": { name: "sendLevel", type: "number", default: defaultOptions.sendLevel }
+                               , "D": { name: "delay", type: "number", default: defaultOptions.delay }
+                               , "P": { name: "pressDuration", type: "number", default: defaultOptions.pressDuration }
+                               , "L": { name: "limitLength", type: "number", default: defaultOptions.limitLength }
+                               , "M": { name: "allowMultiline", type: "boolean", default: defaultOptions.allowMultiline } }
         options := CustomHotkey.Util.parseOptionsString(match.options, optionDefinitionMap)
         data := this.setDefaultOptions(data, options)
       }

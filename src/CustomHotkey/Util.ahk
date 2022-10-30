@@ -990,7 +990,9 @@ class Util {
     parsed := {}
     for name, def in defMap {
       names := StrSplit(def.name, ".")
-      parsed[names*] := def.default
+      if (ObjHasKey(def, "default")) {
+        parsed[names*] := def.default
+      }
     }
 
     for i, option in StrSplit(options, " ") {
@@ -2129,9 +2131,9 @@ class Util {
           ? { active: RegExReplace(data, prefixRegex, "") }
           : { exist: RegExReplace(data, prefixRegex, "") }
         if (match.options != "") {
-          optionDefinitionMap := { "I": { name: "ignoreCase", type: "boolean" }
-                                 , "M": { name: "matchMode", type: "string" }
-                                 , "D": { name: "detectHidden", type: "string" } }
+          optionDefinitionMap := { "I": { name: "ignoreCase", type: "boolean", default: false }
+                                 , "M": { name: "matchMode", type: "string", default: "" }
+                                 , "D": { name: "detectHidden", type: "string", default: false } }
           options := CustomHotkey.Util.parseOptionsString(match.options, optionDefinitionMap)
           data := CustomHotkey.Util.deepDefaultsObject(data, options)
         }
@@ -2268,11 +2270,11 @@ class Util {
      * @param {object} config
      * @param {number} [config.x := 0]
      * @param {number} [config.y := 0]
-     * @param {string} [config.origin := "mouse-bottom-right"]
+     * @param {string} [config.origin := ""]
      * @param {string} [config.displayTime]
      */
     show(message, config := "") {
-      config := CustomHotkey.Util.defaultsObject(config ? config : {}, { x: 0, y: 0, origin: "mouse-bottom-right", displayTime_ms: 0 })
+      config := CustomHotkey.Util.defaultsObject(config ? config : {}, { x: 0, y: 0, origin: "", displayTime_ms: 0 })
       position := new CustomHotkey.Util.Coordinates(config.x, config.y, config.origin)
 
       bk := A_CoordModeToolTip

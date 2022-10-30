@@ -13,6 +13,12 @@ Also want to check the development status, check the [commit history](https://gi
 
 ## \[Released]
 
+## [0.0.3] - 2022-xx-xx
+### Fixed
+* [#15](https://github.com/zero-plusplus/CustomHotkey.ahk/issues/15) Hotkey options not set on CustomHotkey constructor
+* [#16](https://github.com/zero-plusplus/CustomHotkey.ahk/issues/16) `CustomHotkey.setOptions` overwrites unspecified options with an empty string
+* [#17](https://github.com/zero-plusplus/CustomHotkey.ahk/issues/17) Passing a string to the `CustomHotkey.TrayTipAction` constructor does not display a tray tip
+
 ## [0.0.2] - 2022-10-27
 ### Fixed
 * [#3](https://github.com/zero-plusplus/CustomHotkey.ahk/issues/3) When combined KeyStrokeCombiAction, temporarily disabled hotkeys are no longer restored to their original state
@@ -27,5 +33,6 @@ First released
 [Semantic Versioning]: https://semver.org/
 
 <!-- Versions -->
+[0.0.2]: https://github.com/zero-plusplus/CustomHotkey.ahk/compare/v0.0.2..v0.0.3
 [0.0.2]: https://github.com/zero-plusplus/CustomHotkey.ahk/compare/v0.0.1..v0.0.2
 [0.0.1]: https://github.com/zero-plusplus/CustomHotkey.ahk/tree/v0.0.1
