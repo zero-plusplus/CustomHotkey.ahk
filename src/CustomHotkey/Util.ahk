@@ -2270,11 +2270,11 @@ class Util {
      * @param {object} config
      * @param {number} [config.x := 0]
      * @param {number} [config.y := 0]
-     * @param {string} [config.origin := "mouse-bottom-right"]
+     * @param {string} [config.origin := ""]
      * @param {string} [config.displayTime]
      */
     show(message, config := "") {
-      config := CustomHotkey.Util.defaultsObject(config ? config : {}, { x: 0, y: 0, origin: "mouse-bottom-right", displayTime_ms: 0 })
+      config := CustomHotkey.Util.defaultsObject(config ? config : {}, { x: 0, y: 0, origin: "", displayTime_ms: 0 })
       position := new CustomHotkey.Util.Coordinates(config.x, config.y, config.origin)
 
       bk := A_CoordModeToolTip
