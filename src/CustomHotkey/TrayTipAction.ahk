@@ -31,10 +31,11 @@
 
       data := { traytip: RegExReplace(data, prefixRegex, "") }
       if (match.options) {
-        optionDefinitionMap := { "R": { name: "replace", type: "boolean" }
-                               , "S": { name: "silent", type: "boolean" }
-                               , "I": { name: "icon", type: "string" }
-                               , "T": { name: "title", type: "string" } }
+        defaultOptions := CustomHotkey.TrayTipAction.defaultOptions
+        optionDefinitionMap := { "R": { name: "replace", type: "boolean", default: defaultOptions.replace }
+                               , "S": { name: "silent", type: "boolean", default: defaultOptions.silent }
+                               , "I": { name: "icon", type: "string", default: defaultOptions.icon }
+                               , "T": { name: "title", type: "string", default: defaultOptions.title } }
         options := CustomHotkey.Util.parseOptionsString(match.options, optionDefinitionMap)
         data := this.setDefaultOptions(data, options)
       }

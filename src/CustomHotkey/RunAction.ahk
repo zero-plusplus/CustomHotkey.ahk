@@ -34,10 +34,11 @@
 
       data := { run: RegExReplace(data, prefixRegex, "") }
       if (match.options) {
-        optionDefinitionMap := { "R": { name: "replace", type: "boolean" }
-                               , "W": { name: "wait", type: "boolean" }
-                               , "M": { name: "launchMode", type: "string" }
-                               , "L": { name: "limitArgLength", type: "number" } }
+        defaultOptions := CustomHotkey.RunAction.defaultOptions
+        optionDefinitionMap := { "R": { name: "replace", type: "boolean", default: defaultOptions.replace }
+                               , "W": { name: "wait", type: "boolean", default: defaultOptions.wait }
+                               , "M": { name: "launchMode", type: "string", default: defaultOptions.launchMode }
+                               , "L": { name: "limitArgLength", type: "number", default: defaultOptions.limitArgLength } }
         options := CustomHotkey.Util.parseOptionsString(match.options, optionDefinitionMap)
         data := this.setDefaultOptions(data, options)
       }

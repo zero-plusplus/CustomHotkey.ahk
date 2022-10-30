@@ -16,6 +16,7 @@ Also want to check the development status, check the [commit history](https://gi
 ## [0.0.3] - 2022-xx-xx
 ### Fixed
 * [#15](https://github.com/zero-plusplus/CustomHotkey.ahk/issues/15) Hotkey options not set on CustomHotkey constructor
+* [#16](https://github.com/zero-plusplus/CustomHotkey.ahk/issues/16) `CustomHotkey.setOptions` overwrites unspecified options with an empty string
 
 ## [0.0.2] - 2022-10-27
 ### Fixed
