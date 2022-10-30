@@ -13,7 +13,7 @@ Also want to check the development status, check the [commit history](https://gi
 
 ## \[Released]
 
-## [0.0.3] - 2022-xx-xx
+## [0.0.3] - 2022-10-30
 ### Fixed
 * [#15](https://github.com/zero-plusplus/CustomHotkey.ahk/issues/15) Hotkey options not set on CustomHotkey constructor
 * [#16](https://github.com/zero-plusplus/CustomHotkey.ahk/issues/16) `CustomHotkey.setOptions` overwrites unspecified options with an empty string
