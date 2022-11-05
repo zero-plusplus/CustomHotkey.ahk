@@ -12,17 +12,26 @@ new CustomHotkey("RCtrl & 3", [ { origin: "window", speed: 10 }
                               , { origin: "window-bottom-left", speed: 10 }
                               , { origin: "window-middle-left", speed: 10 }
                               , { origin: "window-center", speed: 10 } ]).on()
-new CustomHotkey("RCtrl & 4", [ { origin: "screen", speed: 10 }
-                              , { origin: "screen-top-center", speed: 10 }
-                              , { origin: "screen-top-right", speed: 10 }
-                              , { origin: "screen-middle-right", speed: 10 }
-                              , { origin: "screen-bottom-right", speed: 10 }
-                              , { origin: "screen-bottom-center", speed: 10 }
-                              , { origin: "screen-bottom-left", speed: 10 }
-                              , { origin: "screen-middle-left", speed: 10 }
-                              , { origin: "screen-center", speed: 10 } ]).on()
-new CustomHotkey("RCtrl & 5", [ { origin: "mouse-bottom-left", speed: 10 } ]).on()
-new CustomHotkey("RCtrl & 6", [ { origin: "caret", speed: 10 }
+new CustomHotkey("RCtrl & 4", [ { origin: "screen-1-top-left", speed: 10 }
+                              , { origin: "screen-1-top-center", speed: 10 }
+                              , { origin: "screen-1-top-right", speed: 10 }
+                              , { origin: "screen-1-middle-right", speed: 10 }
+                              , { origin: "screen-1-bottom-right", speed: 10 }
+                              , { origin: "screen-1-bottom-center", speed: 10 }
+                              , { origin: "screen-1-bottom-left", speed: 10 }
+                              , { origin: "screen-1-middle-left", speed: 10 }
+                              , { origin: "screen-1-center", speed: 10 } ]).on()
+new CustomHotkey("RCtrl & 5", [ { origin: "screen-2-top-left", speed: 10 }
+                              , { origin: "screen-2-top-center", speed: 10 }
+                              , { origin: "screen-2-top-right", speed: 10 }
+                              , { origin: "screen-2-middle-right", speed: 10 }
+                              , { origin: "screen-2-bottom-right", speed: 10 }
+                              , { origin: "screen-2-bottom-center", speed: 10 }
+                              , { origin: "screen-2-bottom-left", speed: 10 }
+                              , { origin: "screen-2-middle-left", speed: 10 }
+                              , { origin: "screen-2-center", speed: 10 } ]).on()
+new CustomHotkey("RCtrl & 6", [ { origin: "mouse-bottom-left", speed: 10 } ]).on()
+new CustomHotkey("RCtrl & 7", [ { origin: "caret", speed: 10 }
                               , { origin: "caret-top-center", speed: 10 }
                               , { origin: "caret-top-right", speed: 10 }
                               , { origin: "caret-middle-right", speed: 10 }
