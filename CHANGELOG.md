@@ -13,6 +13,13 @@ Also want to check the development status, check the [commit history](https://gi
 
 ## \[Released]
 
+## [0.0.4] - 2022-xx-xx
+### Added
+* [#14](https://github.com/zero-plusplus/CustomHotkey.ahk/issues/14) Add the option to specify each monitor and primary monitor in `"monitor"` and `"screen"` of origin such as `"monitor-primary"` and `"monitor-1"`
+
+### Fixed
+* [#13](https://github.com/zero-plusplus/CustomHotkey.ahk/issues/13) Origin `"monitor"` and `"screen"` return coordinates of the primary monitor, instead of the active monitor
+
 ## [0.0.3] - 2022-10-30
 ### Fixed
 * [#15](https://github.com/zero-plusplus/CustomHotkey.ahk/issues/15) Hotkey options not set on CustomHotkey constructor
@@ -33,6 +40,7 @@ First released
 [Semantic Versioning]: https://semver.org/
 
 <!-- Versions -->
-[0.0.2]: https://github.com/zero-plusplus/CustomHotkey.ahk/compare/v0.0.2..v0.0.3
+[0.0.4]: https://github.com/zero-plusplus/CustomHotkey.ahk/compare/v0.0.3..v0.0.4
+[0.0.3]: https://github.com/zero-plusplus/CustomHotkey.ahk/compare/v0.0.2..v0.0.3
 [0.0.2]: https://github.com/zero-plusplus/CustomHotkey.ahk/compare/v0.0.1..v0.0.2
 [0.0.1]: https://github.com/zero-plusplus/CustomHotkey.ahk/tree/v0.0.1
