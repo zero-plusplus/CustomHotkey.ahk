@@ -401,7 +401,7 @@ class Util {
 
     keys := StrSplit(fieldName, ".")
     value := obj[keys*]
-    return Customhotkey.Util.isEmpty(value)
+    return CustomHotkey.Util.isEmpty(value)
   }
   /**
    * @static
@@ -410,7 +410,7 @@ class Util {
    * @return {boolean}
    */
   isNonEmptyField(obj, fieldName) {
-    return !Customhotkey.Util.isEmptyField(obj, fieldName)
+    return !CustomHotkey.Util.isEmptyField(obj, fieldName)
   }
   /**
    * @static
