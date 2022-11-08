@@ -331,6 +331,7 @@ class CustomHotkey extends CustomHotkey.Util.Functor {
   #Include %A_LineFile%\..\CustomHotkey\MouseDragAction.ahk
   #Include %A_LineFile%\..\CustomHotkey\MouseGestureCombiAction.ahk
   #Include %A_LineFile%\..\CustomHotkey\MouseMoveAction.ahk
+  #Include %A_LineFile%\..\CustomHotkey\MousePositionCondition.ahk
   #Include %A_LineFile%\..\CustomHotkey\MouseTimeIdleCondition.ahk
   #Include %A_LineFile%\..\CustomHotkey\OrCondition.ahk
   #Include %A_LineFile%\..\CustomHotkey\PasteAction.ahk
