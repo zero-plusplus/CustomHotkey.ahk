@@ -3,6 +3,7 @@
   static _items := [ CustomHotkey.ImageCondition
                    , CustomHotkey.ImeCondition
                    , CustomHotkey.MouseTimeIdleCondition
+                   , CustomHotkey.MousePositionCondition
                    , CustomHotkey.WindowCondition
                    , CustomHotkey.AndCondition
                    , CustomHotkey.OrCondition
