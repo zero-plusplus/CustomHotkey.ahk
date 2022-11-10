@@ -45,6 +45,7 @@ This document has been translated by [DeepL Translator](https://www.deepl.com/tr
     * [WindowCondition](#windowcondition)
     * [ImeCondition](#imecondition)
     * [ImageCondition](#imagecondition)
+    * [MousePositionCondition](#mousepositioncondition)
     * [MouseTimeIdleCondition](#mousetimeidlecondition)
     * [CustomCondition](#customcondition)
   * [Grouping](#grouping)
@@ -52,6 +53,7 @@ This document has been translated by [DeepL Translator](https://www.deepl.com/tr
 * [Common settings](#common-settings)
   * [Default option value](#default-option-value)
   * [Origin of coordinates](#origin-of-coordinates)
+  * [Rectangle](#rectangle)
   * [Time](#time)
   * [Color](#color)
   * [Template string](#template-string)
@@ -754,20 +756,7 @@ It can be defined by specifying an object with the following fields. The `image`
   * `resize` : A boolean representing whether to resize or not, or an object with the following fields. Default is `true`
     * `width` : Width of the image to be loaded. If `-0` is specified, the image is not resized. If `-1` is specified, the image will be resized keeping the ratio
     * `heigth` : Height of the image when loading. If `-0` is specified, the image is not resized. If `-1` is specified, the image is resized keeping the ratio
-* `targetRect` : Rectangle range to search. There are three ways to specify the target rectangle. Default is `"window"`
-  * Specify the following strings
-    * `"screen"` : Target active screen
-    * `"window"` : Target the active window
-  * Search for a rectangle of a specified size
-    * `x` : A x-coordinate of the starting point of the search range
-    * `y` : A y-coordinate of the starting point of the search range
-    * `width` : Width of the rectangle
-    * `height` : Height of the rectangle
-    * `origin` : An [origin](#origin-of-coordinates) of the `x` and `y` coordinates. Default is `"window"`
-  * Search a rectangular range from the specified position (top left) to the position (bottom right). Specify an array of objects of length 2 with the following fields
-    * `x` : A x-coordinate of the starting point of the search range
-    * `y` : A y-coordinate of the starting point of the search range
-    * `origin` : An [origin](#origin-of-coordinates) of the `x` and `y` coordinates. Default is `"window"`
+* `targetRect` : A [rectangle](#rectangle) to use as the search range. Default is `"window"`
 * `button` : A name of the mouse button to use for clicking. The following string can be specified. It is case-insensitive. Default is `LButton`
   * `"LButton"`, `"Left"`, `"L"` : Left button
   * `"RButton"`, `"Right"`, `"R"` : Right button
@@ -1741,20 +1730,7 @@ It can be defined by specifying an object with the following fields. Many are co
   * `resize` : A boolean representing whether to resize or not, or an object with the following fields. Default is `true`
     * `width` : Width of the image to be loaded. If `-0` is specified, the image is not resized. If `-1` is specified, the image will be resized keeping the ratio
     * `heigth` : Height of the image when loading. If `-0` is specified, the image is not resized. If `-1` is specified, the image is resized keeping the ratio
-* `targetRect` : Rectangle range to search. There are three ways to specify the target rectangle. Default is `"window"`
-  * Specify the following strings
-    * `"screen"` : Target active screen
-    * `"window"` : Target the active window
-  * Search for a rectangle of a specified size
-    * `x` : A x-coordinate of the starting point of the search range
-    * `y` : A y-coordinate of the starting point of the search range
-    * `width` : Width of the rectangle
-    * `height` : Height of the rectangle
-    * `origin` : An [origin](#origin-of-coordinates) of the `x` and `y` coordinates. Default is `"window"`
-  * Search a rectangular range from the specified position (top left) to the position (bottom right). Specify an array of objects of length 2 with the following fields
-    * `x` : A x-coordinate of the starting point of the search range
-    * `y` : A y-coordinate of the starting point of the search range
-    * `origin` : An [origin](#origin-of-coordinates) of the `x` and `y` coordinates. Default is `"window"`
+* `targetRect` : A [rectangle](#rectangle) to use as the search range. Default is `"window"`
 
 The following is an example of switching between Actions when an image is found and when not found.
 
@@ -1763,6 +1739,51 @@ The following is an example of switching between Actions when an image is found 
 condition := { image: "path/to/image.png", targetRect: "window" }
 new CustomHotkey("RCtrl & 1", "{ToolTip}Image found", condition).on()
 new CustomHotkey("RCtrl & 1", "{ToolTip}Image not found").on()
+```
+
+### MousePositionCondition
+This Condition enables hotkey when the mouse is in the specified position when a Trigger is pressed. It is generally used to implement hot-edge and hot-corner that are executed when a edge/corner of the monitor is clicked.
+
+It can be defined by specifying an object with the following fields. `mousepos` field is required.
+
+* `mousepos` : A [rectangle](#rectangle) or a string containing a combination of the following prefixes and suffixes, such as `"window-top-left-corner"`
+  1. Specify the following prefixes. If omitted, it is the same as specifying `"monitor"`
+      * `"monitor"`, `"screen"` : Target the active monitor. You can additionally specify the following strings to change the target monitor
+        * `-<number>` : Target the monitor with the specified number. e.g. `"screen-1"`
+        * `-primary` : Target the primary monitor. e.g. `"screen-primary"`
+      * `"window"` : Target the active window
+  2. Specify the following suffixes
+      * `"-top-left-corner"`, `"-top-left"` : The [rectangle](#rectangle) representing the top left corner of the target is set
+      * `"-top-right-corner"`, `"-top-right"` : The [rectangle](#rectangle) representing the top right corner of the target is set
+      * `"-bottom-left-corner"`, `"-bottom-left"` : The [rectangle](#rectangle) representing the bottom left corner of the target is set
+      * `"-bottom-right-corner"`, `"-bottom-right"` : The [rectangle](#rectangle) representing the bottom right corner of the target is set
+      * `"-top-edge"`, `"-top"` : The [rectangle](#rectangle) representing the top edge of the target is set
+      * `"-bottom-edge"`, `"-bottom"` : The [rectangle](#rectangle) representing the bottom edge of the target is set
+      * `"-left-edge"`, `"-left"` : The [rectangle](#rectangle) representing the left edge of the target is set
+      * `"-right-edge"`, `"-right"` : The [rectangle](#rectangle) representing the right edge of the target is set
+
+The following is an illustration of the rectangle that will be set if you specify a string for `mousepos`. If you want to change the size of the rectangle representing a edge/corner, specify a number (in pixels) to `CustomHotkey.MousePositionCondition.edgeSize`. The default value is `5`.
+
+```
+        `top-left`         `top`         `top-right`
+     `top-left-corner`   `top-edge`   `top-right-corner`
+            ┌↓┬───────────────↓───────────────┬↓┐
+            ├─┼───────────────────────────────┼─┤
+            │ │                               │ │
+   `left`   │ │            `screen`           │ │   `right`
+`left-edge` → │            `monitor`          │ ← `right-edge`
+            │ │            `window`           │ │
+            │ │                               │ │
+            ├─┼───────────────────────────────┼─┤
+            └↑┴───────────────↑───────────────┴↑┘
+       `bottom-left`       `bottom`      `bottom-right`
+   `bottom-left-corner` `bottom-edge` `bottom-right-corner`
+```
+
+The following example opens the start menu by clicking in the right corner of the primary monitor.
+
+```ahk
+new CustomHotkey("LButton", "{LWin}", { mousepos: "screen-primary-right-edge" }).on()
 ```
 
 ### MouseTimeIdleCondition
@@ -2079,10 +2100,12 @@ new CustomHotkey("RCtrl & 1", "{a}{b}{c}").on()
 ### **Origin of coordinates**
 Set the following string to set the specified point as the origin of coordinates.
 
-* `"window"` : Set the origin to the upper left corner of the active window
-* `"monitor"`, `"screen"` : Set the origin to the upper left corner of the active monitor
-* `"mouse"` : Set the origin to the upper left of the mouse cursor
-* `"caret"` : Set the origin to the upper left of the caret (input position)
+* `"monitor"`, `"screen"` : Set the origin to the top left corner of the active monitor. You can change the target monitor by specifying the following suffixes such as `"monitor-primary"`
+  * `-<number>` : Target the monitor with the specified number. e.g. `"monitor-1"`
+  * `-primary` : Target the primary monitor. e.g. `"monitor-primary"`
+* `"window"` : Set the origin to the top left corner of the active window
+* `"mouse"` : Set the origin to the top left of the mouse cursor
+* `"caret"` : Set the origin to the top left of the caret (input position)
 
 The position of the origin can be adjusted by adding the following suffixes such as `"window-top-center"`. If omitted, the same as when `-top-left` is specified.
 
@@ -2115,6 +2138,28 @@ The adjustment position of the origin is as follows respectively.
            `bottom-left`  `bottom-center`  `bottom-right`
                              `bottom`
 ```
+
+## Rectangle
+Some Actions can specify the following data representing a rectangle
+
+* the following string
+  * `"screen"`, `"monitor"` : It is converted to the rectangle data of the active monitor. The target monitor can be changed by specifying the following suffixes
+    * `-<number>` : Target the monitor with the specified number. e.g. `"monitor-1"`
+    * `-primary` : Target the primary monitor. e.g. `"monitor-primary"`
+* An object with the following fields. e.g. `{ x: 0, y: 0, width: 30, height: 30 }`
+  * `x` : A x-coordinate of the rectangle
+  * `y` : A y-coordinate of the rectangle
+  * `width` : A width of the rectangle
+  * `height` : A height of the rectangle
+  * `origin` : An [origin](#origin-of-coordinates) of the `x` and `y` coordinates. Default is `"monitor"`
+* An array consisting of objects with the following fields. Example: `[ { x: 0, y: 0 }, { x: 30, y: 30 } ]`
+  * `x` : A number representing the x-coordinate of the start or end point
+  * `y` : A number representing the y-coordinate of the start or end point
+  * `origin` : An [origin](#origin-of-coordinates) of the `x` and `y` coordinates. Default is `"monitor"`
+* An array of arrays with the following two or three elements. e.g. `[ [ [ 0, 0 ], [ 30, 30 ]`
+  1. A number representing the x-coordinate of the start or end point
+  2. A number representing the y-coordinate of the start or end point
+  3. An [origin](#origin-of-coordinates) of the coordinates. If omitted, `"monitor"` is used
 
 ### **Time**
 In some Actions there is an opportunity to specify a time.
