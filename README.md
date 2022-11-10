@@ -686,7 +686,7 @@ It can be defined by specifying an object with the following fields. Either the 
   * `"MButton"`, `"Middle"`, `"M"` : Middle button
   * `"XButton1"`, `"X1"` : Extension 1 button. Usually placed at the front side
   * `"XButton2"`, `"X2"` : Extension 2 button. Usually located at the back
-  * In addition to the above, the following suffixes can be additionally specified with a space between them, such as `"LButton Up"`. It is case-insensitive
+  * In addition to the above, the following suffix can be additionally specified with a space between them, such as `"LButton Up"`. It is case-insensitive
     * `"Up"`, `"U"` : Release the mouse button
     * `"Down"`, `"D"` : Leave the mouse button pressed
 * `mode` : Send mode of the click. Specify the following string. Default is `"Event"`
@@ -763,7 +763,7 @@ It can be defined by specifying an object with the following fields. The `image`
   * `"MButton"`, `"Middle"`, `"M"` : Middle button
   * `"XButton1"`, `"X1"` : Extension 1 button. Usually placed at the front side
   * `"XButton2"`, `"X2"` : Extension 2 button. Usually located at the back
-  * In addition to the above, the following suffixes can be additionally specified with a space between them, such as `"LButton Up"`. It is case-insensitive
+  * In addition to the above, the following suffix can be additionally specified with a space between them, such as `"LButton Up"`. It is case-insensitive
     * `"Up"`, `"U"` : Release the mouse button
     * `"Down"`, `"D"` : Leave the mouse button pressed
 * `mode` : Send mode of the click. Specify the following string. Default is `"Event"`
@@ -1746,13 +1746,13 @@ This Condition enables hotkey when the mouse is in the specified position when a
 
 It can be defined by specifying an object with the following fields. `mousepos` field is required.
 
-* `mousepos` : A [rectangle](#rectangle) or a string containing a combination of the following prefixes and suffixes, such as `"window-top-left-corner"`
-  1. Specify the following prefixes. If omitted, it is the same as specifying `"monitor"`
+* `mousepos` : A [rectangle](#rectangle) or a string containing a combination of the following prefix and suffix, such as `"window-top-left-corner"`
+  1. Specify the following prefix. If omitted, it is the same as specifying `"monitor"`
       * `"monitor"`, `"screen"` : Target the active monitor. You can additionally specify the following strings to change the target monitor
         * `-<number>` : Target the monitor with the specified number. e.g. `"screen-1"`
         * `-primary` : Target the primary monitor. e.g. `"screen-primary"`
       * `"window"` : Target the active window
-  2. Specify the following suffixes
+  2. Specify the following suffix
       * `"-top-left-corner"`, `"-top-left"` : The [rectangle](#rectangle) representing the top left corner of the target is set
       * `"-top-right-corner"`, `"-top-right"` : The [rectangle](#rectangle) representing the top right corner of the target is set
       * `"-bottom-left-corner"`, `"-bottom-left"` : The [rectangle](#rectangle) representing the bottom left corner of the target is set
@@ -2100,14 +2100,14 @@ new CustomHotkey("RCtrl & 1", "{a}{b}{c}").on()
 ### **Origin of coordinates**
 Set the following string to set the specified point as the origin of coordinates.
 
-* `"monitor"`, `"screen"` : Set the origin to the top left corner of the active monitor. You can change the target monitor by specifying the following suffixes such as `"monitor-primary"`
+* `"monitor"`, `"screen"` : Set the origin to the top left corner of the active monitor. You can change the target monitor by specifying the following suffix such as `"monitor-primary"`
   * `-<number>` : Target the monitor with the specified number. e.g. `"monitor-1"`
   * `-primary` : Target the primary monitor. e.g. `"monitor-primary"`
 * `"window"` : Set the origin to the top left corner of the active window
 * `"mouse"` : Set the origin to the top left of the mouse cursor
 * `"caret"` : Set the origin to the top left of the caret (input position)
 
-The position of the origin can be adjusted by adding the following suffixes such as `"window-top-center"`. If omitted, the same as when `-top-left` is specified.
+The position of the origin can be adjusted by adding the following suffix such as `"window-top-center"`. If omitted, the same as when `-top-left` is specified.
 
 * `-top-left`
 * `-top-center`, `-top`
@@ -2143,7 +2143,7 @@ The adjustment position of the origin is as follows respectively.
 Some Actions can specify the following data representing a rectangle
 
 * the following string
-  * `"screen"`, `"monitor"` : It is converted to the rectangle data of the active monitor. The target monitor can be changed by specifying the following suffixes
+  * `"screen"`, `"monitor"` : It is converted to the rectangle data of the active monitor. The target monitor can be changed by specifying the following suffix
     * `-<number>` : Target the monitor with the specified number. e.g. `"monitor-1"`
     * `-primary` : Target the primary monitor. e.g. `"monitor-primary"`
 * An object with the following fields. e.g. `{ x: 0, y: 0, width: 30, height: 30 }`
@@ -2152,7 +2152,7 @@ Some Actions can specify the following data representing a rectangle
   * `width` : A width of the rectangle
   * `height` : A height of the rectangle
   * `origin` : An [origin](#origin-of-coordinates) of the `x` and `y` coordinates. Default is `"monitor"`
-* An array consisting of objects with the following fields. Example: `[ { x: 0, y: 0 }, { x: 30, y: 30 } ]`
+* An array consisting of objects with the following fields. e.g. `[ { x: 0, y: 0 }, { x: 30, y: 30 } ]`
   * `x` : A number representing the x-coordinate of the start or end point
   * `y` : A number representing the y-coordinate of the start or end point
   * `origin` : An [origin](#origin-of-coordinates) of the `x` and `y` coordinates. Default is `"monitor"`
