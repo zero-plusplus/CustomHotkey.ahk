@@ -106,7 +106,7 @@
     coordinates(position, options) {
       options := IsObject(options) ? options : { template: options }
       template := options.template ? options.template : "{x}, {y}"
-      origin := options.origin ? options.origin : "screen"
+      origin := options.origin ? options.origin : "monitors"
 
       originPosition := new CustomHotkey.Util.Coordinates(0, 0, origin)
       x := position.x - originPosition.x

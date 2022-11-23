@@ -16,6 +16,7 @@ Also want to check the development status, check the [commit history](https://gi
 ## [0.0.4] - 2022-xx-xx
 ### Added
 * [#14](https://github.com/zero-plusplus/CustomHotkey.ahk/issues/14) Add the option to specify each monitor and primary monitor in `"monitor"` and `"screen"` of origin such as `"monitor-primary"` and `"monitor-1"`
+* [#20](https://github.com/zero-plusplus/CustomHotkey.ahk/issues/20) Add `"monitors"` and `"screens"` to origin
 
 ### Fixed
 * [#13](https://github.com/zero-plusplus/CustomHotkey.ahk/issues/13) Origin `"monitor"` and `"screen"` return coordinates of the primary monitor, instead of the active monitor

@@ -45,15 +45,19 @@
    */
   _getRectInMonitor(mousepos, edgeSize) {
     target := ""
+    isMonitors := false
 
-    regex := "i)^((screen|monitor)-)?((?<target>\d+|primary)-)?"
+    regex := "i)^((screen|monitor)(?<isMonitors>s)?-)?((?<target>\d+|primary)-)?"
     match := CustomHotkey.Util.regExMatch(mousepos, regex)
-    if (match && match.target) {
+    if (match) {
       target := match.target
+      isMonitors := CustomHotkey.Util.toBoolean(match.isMonitors)
     }
 
     mousepos := RegExReplace(mousepos, regex, "")
-    monitorInfo := new CustomHotkey.Util.MonitorInfo(target)
+    monitorInfo := isMonitors
+      ? new CustomHotkey.Util.MonitorsInfo()
+      : new CustomHotkey.Util.MonitorInfo(target)
     screenX := monitorInfo.rect.x
     screenY := monitorInfo.rect.y
     screenWidth := monitorInfo.rect.width

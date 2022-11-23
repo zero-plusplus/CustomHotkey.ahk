@@ -1982,7 +1982,7 @@ class Util {
    * @return {CustomHotkey.Util.Rect}
    */
   createCustomRect(rectData) {
-    defaultOrigin := "screen"
+    defaultOrigin := "monitors"
 
     if (CustomHotkey.Util.isArray(rectData)) {
       point1 := rectData[1]
@@ -2353,12 +2353,6 @@ class Util {
     }
   }
   class MonitorInfo {
-    _count := 0
-    count {
-      get {
-        return this._count
-      }
-    }
     __NEW(monitorNumber := "") {
       if (CustomHotkey.Util.isEmpty(monitorNumber)) {
         return this.getActiveMonitor()
@@ -2372,19 +2366,78 @@ class Util {
     }
     /**
      * @static
+     * @return {number}
+     */
+    getMonitorCount() {
+      SysGet, monitorCount, MonitorCount
+      return monitorCount
+    }
+    /**
+     * @static
      * @return {CustomHotkey.Util.MonitorInfo | ""}
      */
     getActiveMonitor() {
       mouse := new CustomHotkey.Util.Coordinates(0, 0, "mouse")
       mouseRect := new CustomHotkey.Util.Rect(mouse.x, mouse.y, 0, 0)
 
-      SysGet, monitorCount, MonitorCount
+      monitorCount := CustomHotkey.Util.MonitorInfo.getMonitorCount()
       Loop %monitorCount%
       {
         monitorInfo := new CustomHotkey.Util.MonitorInfo(A_Index)
         if (monitorInfo.rect.contains(mouseRect)) {
           return monitorInfo
         }
+      }
+    }
+  }
+  class MonitorsInfo {
+    ;; @type {number}
+    count {
+      get {
+        count := this.monitors.length()
+        return count
+      }
+    }
+    __NEW() {
+      monitors := []
+      monitorCount := CustomHotkey.Util.MonitorInfo.getMonitorCount()
+      Loop %monitorCount%
+      {
+        monitors.push(new CustomHotkey.Util.MonitorInfo(A_Index))
+      }
+
+      this.monitors := monitors
+    }
+    rect {
+      get {
+        x1 := 0
+        y1 := 0
+        x2 := 0
+        y2 := 0
+        for i, monitor in this.monitors {
+          x1 := Min(x1, monitor.rect.x1)
+          y1 := Min(y1, monitor.rect.y1)
+          x2 := Max(x2, monitor.rect.x2)
+          y2 := Max(y2, monitor.rect.y2)
+        }
+        rect := new CustomHotkey.Util.Rect([ [ x1, y1 ], [ x2, y2 ] ])
+        return rect
+      }
+    }
+    workAreaRect {
+      get {
+        x1 := 0
+        y1 := 0
+        x2 := 0
+        y2 := 0
+        for i, monitor in this.monitors {
+          x1 := Min(x1, monitor.workAreaRect.x1)
+          y1 := Min(x1, monitor.workAreaRect.y1)
+          x2 := Max(x2, monitor.workAreaRect.x2)
+          y2 := Max(x2, monitor.workAreaRect.y2)
+        }
+        workAreaRect := new CustomHotkey.Util.Rect([ [ x1, y1 ], [ x2, y2 ] ])
+        return workAreaRect
       }
     }
   }
@@ -2426,6 +2479,10 @@ class Util {
       if (origin ~= "i)^window") {
         rect := CustomHotkey.Util.Coordinates.getWindowRect()
       }
+      else if (origin ~= "i)^(screens|monitors)") {
+        monitors := new CustomHotkey.Util.MonitorsInfo()
+        rect := monitors.rect
+      }
       else if (origin ~= "i)^(screen|monitor)") {
         rect := CustomHotkey.Util.Coordinates.getScreenRect(origin)
       }
@@ -2442,7 +2499,7 @@ class Util {
       this.x := position.x + x
       this.y := position.y + y
       this.originalOrigin := origin
-      this.origin := "screen"
+      this.origin := "monitors"
     }
     /**
      * @static

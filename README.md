@@ -1751,6 +1751,7 @@ It can be defined by specifying an object with the following fields. `mousepos` 
       * `"monitor"`, `"screen"` : Target the active monitor. You can additionally specify the following strings to change the target monitor
         * `-<number>` : Target the monitor with the specified number. e.g. `"screen-1"`
         * `-primary` : Target the primary monitor. e.g. `"screen-primary"`
+      * `"monitors"`, `"screens"` : Target the virtual monitor. It treats all connected monitors as one.
       * `"window"` : Target the active window
   2. Specify the following suffix
       * `"-top-left-corner"`, `"-top-left"` : The [rectangle](#rectangle) representing the top left corner of the target is set
@@ -1762,7 +1763,7 @@ It can be defined by specifying an object with the following fields. `mousepos` 
       * `"-left-edge"`, `"-left"` : The [rectangle](#rectangle) representing the left edge of the target is set
       * `"-right-edge"`, `"-right"` : The [rectangle](#rectangle) representing the right edge of the target is set
 
-The following is an illustration of the rectangle that will be set if you specify a string for `mousepos`. If you want to change the size of the rectangle representing a edge/corner, specify a number (in pixels) to `CustomHotkey.MousePositionCondition.edgeSize`. The default value is `5`.
+The following illustration is a rectangle that sets when a string is specified in `mousepos`. If you want to change the size of the rectangle representing a edge/corner, specify a number (in pixels) to `CustomHotkey.MousePositionCondition.edgeSize`. The default value is `5`.
 
 ```
         `top-left`         `top`         `top-right`
@@ -1776,6 +1777,26 @@ The following is an illustration of the rectangle that will be set if you specif
             │ │                               │ │
             ├─┼───────────────────────────────┼─┤
             └↑┴───────────────↑───────────────┴↑┘
+       `bottom-left`       `bottom`      `bottom-right`
+   `bottom-left-corner` `bottom-edge` `bottom-right-corner`
+```
+
+`monitors` (alias `screens`) treat all connected monitors as a virtual one monitor. The following is an example of three monitors placed in a non-rectangular form.
+
+```
+        `top-left`         `top`         `top-right`
+     `top-left-corner`   `top-edge`   `top-right-corner`
+            ┌↓┬───────────────↓───────────────┬↓┐
+            ├─┼───────────────┬───────────────┼─┤
+            │ │               |               │ │
+            │ │      [1]      |      [3]      │ │
+   `left`   │ │               |               │ │   `right`
+`left-edge` → ├───────────────┼───────────────┤ ← `right-edge`
+            │ │               |               . .
+            │ │      [2]      |               . .
+            │ │               |               . .
+            ├─┼───────────────┴ - - - - - - - . .
+            └↑┴───────────────↑ - - - - - - - -↑-
        `bottom-left`       `bottom`      `bottom-right`
    `bottom-left-corner` `bottom-edge` `bottom-right-corner`
 ```
@@ -2101,8 +2122,9 @@ new CustomHotkey("RCtrl & 1", "{a}{b}{c}").on()
 Set the following string to set the specified point as the origin of coordinates.
 
 * `"monitor"`, `"screen"` : Set the origin to the top left corner of the active monitor. You can change the target monitor by specifying the following suffix such as `"monitor-primary"`
-  * `-<number>` : Target the monitor with the specified number. e.g. `"monitor-1"`
-  * `-primary` : Target the primary monitor. e.g. `"monitor-primary"`
+  * `-<number>` : Set the origin to the upper left corner of the monitor of the specified number. e.g. `"monitor-1"`
+  * `-primary` : Set the origin at the upper left corner of the primary monitor. e.g. `"monitor-primary"`
+* `"monitors"`, `"screens"` : Set the origin to the upper left corner of the virtual monitor, which treats all connected monitors as one. If you want to specify absolute coordinates, it is recommended to specify this instead of `"monitor"`
 * `"window"` : Set the origin to the top left corner of the active window
 * `"mouse"` : Set the origin to the top left of the mouse cursor
 * `"caret"` : Set the origin to the top left of the caret (input position)
@@ -2139,6 +2161,26 @@ The adjustment position of the origin is as follows respectively.
                              `bottom`
 ```
 
+The `"monitors"` (alias `"screens"`) treats all connected monitors as a virtual one monitor. The following illustration is an example of the suffix adjustment when three monitors are placed in a non-rectangular configuration.
+
+```
+                              `top`
+            `top-left`     `top-center`     `top-right`
+                ↓               ↓               ↓
+                □───────────────□───────────────□
+                |               |               │
+                |      [1]      |      [3]      │
+    `left`      │               |               │      `right`
+`middle-left` → □───────────────□───────────────□ ← `middle-right`
+                │               │ ↖             .
+                │      [2]      │  `center`     .
+                │               │`middle-center`.
+                □───────────────□ - - - - - - - □
+                ↑               ↑               ↑
+           `bottom-left`  `bottom-center`  `bottom-right`
+                             `bottom`
+```
+
 ## Rectangle
 Some Actions can specify the following data representing a rectangle
 
@@ -2151,15 +2193,15 @@ Some Actions can specify the following data representing a rectangle
   * `y` : A y-coordinate of the rectangle
   * `width` : A width of the rectangle
   * `height` : A height of the rectangle
-  * `origin` : An [origin](#origin-of-coordinates) of the `x` and `y` coordinates. Default is `"monitor"`
+  * `origin` : An [origin](#origin-of-coordinates) of the `x` and `y` coordinates. Default is `"monitors"`
 * An array consisting of objects with the following fields. e.g. `[ { x: 0, y: 0 }, { x: 30, y: 30 } ]`
   * `x` : A number representing the x-coordinate of the start or end point
   * `y` : A number representing the y-coordinate of the start or end point
-  * `origin` : An [origin](#origin-of-coordinates) of the `x` and `y` coordinates. Default is `"monitor"`
+  * `origin` : An [origin](#origin-of-coordinates) of the `x` and `y` coordinates. Default is `"monitors"`
 * An array of arrays with the following two or three elements. e.g. `[ [ [ 0, 0 ], [ 30, 30 ]`
   1. A number representing the x-coordinate of the start or end point
   2. A number representing the y-coordinate of the start or end point
-  3. An [origin](#origin-of-coordinates) of the coordinates. If omitted, `"monitor"` is used
+  3. An [origin](#origin-of-coordinates) of the coordinates. If omitted, `"monitors"` is used
 
 ### **Time**
 In some Actions there is an opportunity to specify a time.
