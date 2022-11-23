@@ -309,7 +309,7 @@
       message .= "`n"
     }
     message := RTrim(message, "`n")
-    context.tip.show(message, { x: context.initPosition.x + 10, y: context.initPosition.y + 15, origin: "screen" })
+    context.tip.show(message, { x: context.initPosition.x + 10, y: context.initPosition.y + 15, origin: "monitors" })
 
     newPosition := new CustomHotkey.Util.Coordinates(0, 0, "mouse")
     this._drawLine(context.currentPosition, newPosition, data.style)
@@ -365,7 +365,7 @@
       this.executeAction(context.matchedItem.action)
     }
     else {
-      context.tip.show(isDone ? "Force terminate" : "Cancel", { x: context.initPosition.x, y: context.initPosition.y, origin: "screen", displayTime: "0.6s" })
+      context.tip.show(isDone ? "Force terminate" : "Cancel", { x: context.initPosition.x, y: context.initPosition.y, origin: "monitors", displayTime: "0.6s" })
     }
     context.trigger.waitRelease()
   }

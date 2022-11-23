@@ -32,7 +32,7 @@
                        , mode: data.mode
                        , x: pos.x
                        , y: pos.y
-                       , origin: "screen"
+                       , origin: "monitors"
                        , count: data.count
                        , speed: data.speed, restore: data.restore })
   }
