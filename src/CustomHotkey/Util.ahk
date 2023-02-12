@@ -974,7 +974,7 @@ class Util {
         value := Format("{:" . flags . "}", value)
       }
 
-      templatedText := RegExReplace(templatedText, regex, value, , 1)
+      templatedText := RegExReplace(templatedText, regex, StrReplace(value, "$", "$$"), , 1)
     }
     return templatedText
   }
