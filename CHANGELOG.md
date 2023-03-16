@@ -22,6 +22,7 @@ Also want to check the development status, check the [commit history](https://gi
 * [#13](https://github.com/zero-plusplus/CustomHotkey.ahk/issues/13) Origin `"monitor"` and `"screen"` return coordinates of the primary monitor, instead of the active monitor
 * [#22](https://github.com/zero-plusplus/CustomHotkey.ahk/issues/22) CommandPaletteCombiAction is not searched correctly when searching for certain characters
 * [#23](https://github.com/zero-plusplus/CustomHotkey.ahk/issues/23) When using the `R` option in PasteAction etc., if the string to expand contains a string such as `${abc}`, it will not be embedded correctly
+* [#24](https://github.com/zero-plusplus/CustomHotkey.ahk/issues/24) ExitAllAction does not terminate some AutoHotkey scripts
 
 ## [0.0.3] - 2022-10-30
 ### Fixed
