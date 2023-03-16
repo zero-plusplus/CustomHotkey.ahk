@@ -73,7 +73,7 @@
     DetectHiddenWindows, On
 
     WinGet, currentScriptPid, PID, ahk_id %A_ScriptHwnd%
-    WinGet, autohotkeyList, List, ahk_class AutoHotkey
+    WinGet, autohotkeyList, List, ahk_exe AutoHotkey.exe
 
     length := autohotkeyList
     Loop %length%
