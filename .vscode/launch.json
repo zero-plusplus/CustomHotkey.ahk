@@ -9,8 +9,6 @@
       "runtimeArgs": [
         "/ErrorStdOut=UTF-8",
         "/CP65001",
-        "/include",
-        "${ahk:suppressErrorDialog}"
       ],
       "args": [],
       "port": "9002-9010",
@@ -20,7 +18,6 @@
       "useAnnounce": "detail",
       "usePerfTips": true,
       "skipFunctions": [
-        "${ahk:suppressErrorDialog}",
         "*.__CALL",
       ],
       "openFileOnExit": "${file}",

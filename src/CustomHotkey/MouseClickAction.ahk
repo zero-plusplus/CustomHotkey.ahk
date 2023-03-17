@@ -49,7 +49,7 @@
     x := position.x
     y := position.y
     speed := data.speed != "" ? data.speed : A_DefaultMouseSpeed
-    this.executeAction({ x: x, y: y, speed: speed, origin: "screen" })
+    this.executeAction({ x: x, y: y, speed: speed, origin: "monitors" })
 
     bk := A_CoordModeMouse
     CoordMode, Mouse, Screen
@@ -63,10 +63,10 @@
     if (data.restore) {
       if (data.restore < 0) {
         restoreSpeed := Abs(data.restore)
-        this.executeAction({ x: currentPosition.x, y: currentPosition.y, origin: "screen", speed: restoreSpeed })
+        this.executeAction({ x: currentPosition.x, y: currentPosition.y, origin: "monitors", speed: restoreSpeed })
         return
       }
-      this.executeAction({ x: currentPosition.x, y: currentPosition.y, origin: "screen", speed: 0 })
+      this.executeAction({ x: currentPosition.x, y: currentPosition.y, origin: "monitors", speed: 0 })
     }
   }
 }

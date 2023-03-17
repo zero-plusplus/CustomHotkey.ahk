@@ -401,7 +401,7 @@ class Util {
 
     keys := StrSplit(fieldName, ".")
     value := obj[keys*]
-    return Customhotkey.Util.isEmpty(value)
+    return CustomHotkey.Util.isEmpty(value)
   }
   /**
    * @static
@@ -410,7 +410,7 @@ class Util {
    * @return {boolean}
    */
   isNonEmptyField(obj, fieldName) {
-    return !Customhotkey.Util.isEmptyField(obj, fieldName)
+    return !CustomHotkey.Util.isEmptyField(obj, fieldName)
   }
   /**
    * @static
@@ -974,7 +974,7 @@ class Util {
         value := Format("{:" . flags . "}", value)
       }
 
-      templatedText := RegExReplace(templatedText, regex, value, , 1)
+      templatedText := RegExReplace(templatedText, regex, StrReplace(value, "$", "$$"), , 1)
     }
     return templatedText
   }
@@ -1510,6 +1510,16 @@ class Util {
   }
   /**
    * @static
+   * @param {any} value
+   * @param {any} [defaultValue := ""]
+   * @return {any}
+   */
+  defaultValue(value, defaultValue) {
+    value := CustomHotkey.Util.isNonEmpty(value) ? value : defaultValue
+    return value
+  }
+  /**
+   * @static
    */
   releaseModifiers() {
     CustomHotkey.Util.releaseKey(CustomHotkey.Remap.modifiers)
@@ -1963,6 +1973,50 @@ class Util {
   }
   /**
    * @static
+   * @param {
+   *  | "window" | "screen" | "monitor"
+   *  | { x: number; y: number; width: number; height: number; origin?: string; }
+   *  | [ [ x: number, y: number, origin?: string ], [ x: number, y: number, origin?: string ] ]
+   *  | [ { x: number; y: number; origin?: string }, { x: number; y: number; origin?: string } ]
+   * } rectData
+   * @return {CustomHotkey.Util.Rect}
+   */
+  createCustomRect(rectData) {
+    defaultOrigin := "monitors"
+
+    if (CustomHotkey.Util.isArray(rectData)) {
+      point1 := rectData[1]
+      point2 := rectData[2]
+      if (CustomHotkey.Util.isArray(point1) || CustomHotkey.Util.isArray(point2)) {
+        point1 := new CustomHotkey.Util.Coordinates(point1[1], point1[2], CustomHotkey.Util.defaultValue(point1[3], defaultOrigin))
+        point2 := new CustomHotkey.Util.Coordinates(point2[1], point2[2], CustomHotkey.Util.defaultValue(point2[3], defaultOrigin))
+        return new CustomHotkey.Util.Rect([ point1, point2 ])
+      }
+      else {
+        point1 := new CustomHotkey.Util.Coordinates(point1.x, point1.y, CustomHotkey.Util.defaultValue(point1.origin, defaultOrigin))
+        point2 := new CustomHotkey.Util.Coordinates(point2.x, point2.y, CustomHotkey.Util.defaultValue(point2.origin, defaultOrigin))
+        return new CustomHotkey.Util.Rect([ point1, point2 ])
+      }
+    }
+    else if (IsObject(rectData)) {
+      point := new CustomHotkey.Util.Coordinates(rectData.x, rectData.y, CustomHotkey.Util.defaultValue(rectData.origin, defaultOrigin))
+      return new CustomHotkey.Util.Rect(point.x, point.y, rectData.width, rectData.height)
+    }
+    else if (CustomHotkey.Util.equalsIgnoreCase(rectData, "window")) {
+      point1 := new CustomHotkey.Util.Coordinates(point1.x, point1.y, "window-top-left")
+      point2 := new CustomHotkey.Util.Coordinates(point2.x, point2.y, "window-bottom-right")
+      return new CustomHotkey.Util.Rect([ point1, point2 ])
+    }
+
+    match := CustomHotkey.Util.regexMatch(rectData, "i)^(screen|monitor)(-(?<target>\d|primary))")
+    if (!match) {
+      return
+    }
+    monitorInfo := new CustomHotkey.Util.MonitorInfo(match.target)
+    return monitorInfo.rect
+  }
+  /**
+   * @static
    * @param {string} imageFile
    * @param { [ CustomHotkey.Util.Coordinates, CustomHotkey.Util.Coordinates ]
    *        | { x: number, y: number, width: number, height: number } } [targetRect := "window"]
@@ -1980,11 +2034,12 @@ class Util {
    * @param { "screen"
    *        | "window"
    *        | [ CustomHotkey.Util.Coordinates, CustomHotkey.Util.Coordinates ]
-   *        | { x: number, y: number, width: number, height: number } } [targetRect := "window"]
+   *        | { x: number, y: number, width: number, height: number } } [rectData := "window"]
    * @param {{ x: number, y: number } | ""}
    */
-  searchImage(imageFile, targetRect := "window") {
-    targetRect := new CustomHotkey.Util.Rect(targetRect)
+  searchImage(imageFile, rectData := "window") {
+    targetRect := CustomHotkey.Util.createCustomRect(rectData)
+
     imageData := CustomHotkey.Util.deepDefaultsObject( IsObject(imageFile) ? imageFile : { path: imageFile }
                                                      , { imageNumber: "", variation: 0, pathType: "", transparent: "", resize: true } )
 
@@ -2297,6 +2352,95 @@ class Util {
       ToolTip, , , , % this.id
     }
   }
+  class MonitorInfo {
+    __NEW(monitorNumber := "") {
+      if (CustomHotkey.Util.isEmpty(monitorNumber)) {
+        return this.getActiveMonitor()
+      }
+
+      this.number := monitorNumber
+      SysGet, monitorInfo, Monitor, %monitorNumber%
+      this.rect := new CustomHotkey.Util.Rect([ [ monitorInfoLeft, monitorInfoTop ], [ monitorInfoRight, monitorInfoBottom ] ])
+      SysGet, monitorWorkAreaInfo, Monitor, %monitorNumber%
+      this.workAreaRect := new CustomHotkey.Util.Rect([ [ monitorWorkAreaInfoLeft, monitorWorkAreaInfoTop ], [ monitorWorkAreaInfoRight, monitorWorkAreaInfoBottom ] ])
+    }
+    /**
+     * @static
+     * @return {number}
+     */
+    getMonitorCount() {
+      SysGet, monitorCount, MonitorCount
+      return monitorCount
+    }
+    /**
+     * @static
+     * @return {CustomHotkey.Util.MonitorInfo | ""}
+     */
+    getActiveMonitor() {
+      mouse := new CustomHotkey.Util.Coordinates(0, 0, "mouse")
+      mouseRect := new CustomHotkey.Util.Rect(mouse.x, mouse.y, 0, 0)
+
+      monitorCount := CustomHotkey.Util.MonitorInfo.getMonitorCount()
+      Loop %monitorCount%
+      {
+        monitorInfo := new CustomHotkey.Util.MonitorInfo(A_Index)
+        if (monitorInfo.rect.contains(mouseRect)) {
+          return monitorInfo
+        }
+      }
+    }
+  }
+  class MonitorsInfo {
+    ;; @type {number}
+    count {
+      get {
+        count := this.monitors.length()
+        return count
+      }
+    }
+    __NEW() {
+      monitors := []
+      monitorCount := CustomHotkey.Util.MonitorInfo.getMonitorCount()
+      Loop %monitorCount%
+      {
+        monitors.push(new CustomHotkey.Util.MonitorInfo(A_Index))
+      }
+
+      this.monitors := monitors
+    }
+    rect {
+      get {
+        x1 := 0
+        y1 := 0
+        x2 := 0
+        y2 := 0
+        for i, monitor in this.monitors {
+          x1 := Min(x1, monitor.rect.x1)
+          y1 := Min(y1, monitor.rect.y1)
+          x2 := Max(x2, monitor.rect.x2)
+          y2 := Max(y2, monitor.rect.y2)
+        }
+        rect := new CustomHotkey.Util.Rect([ [ x1, y1 ], [ x2, y2 ] ])
+        return rect
+      }
+    }
+    workAreaRect {
+      get {
+        x1 := 0
+        y1 := 0
+        x2 := 0
+        y2 := 0
+        for i, monitor in this.monitors {
+          x1 := Min(x1, monitor.workAreaRect.x1)
+          y1 := Min(x1, monitor.workAreaRect.y1)
+          x2 := Max(x2, monitor.workAreaRect.x2)
+          y2 := Max(x2, monitor.workAreaRect.y2)
+        }
+        workAreaRect := new CustomHotkey.Util.Rect([ [ x1, y1 ], [ x2, y2 ] ])
+        return workAreaRect
+      }
+    }
+  }
   /**
    * Calculate the coordinates with the origin at a certain point.
    * @example
@@ -2335,8 +2479,12 @@ class Util {
       if (origin ~= "i)^window") {
         rect := CustomHotkey.Util.Coordinates.getWindowRect()
       }
+      else if (origin ~= "i)^(screens|monitors)") {
+        monitors := new CustomHotkey.Util.MonitorsInfo()
+        rect := monitors.rect
+      }
       else if (origin ~= "i)^(screen|monitor)") {
-        rect := CustomHotkey.Util.Coordinates.getScreenRect()
+        rect := CustomHotkey.Util.Coordinates.getScreenRect(origin)
       }
       else if (origin ~= "i)^caret") {
         rect := CustomHotkey.Util.Coordinates.getCaretRect()
@@ -2351,53 +2499,54 @@ class Util {
       this.x := position.x + x
       this.y := position.y + y
       this.originalOrigin := origin
-      this.origin := "screen"
+      this.origin := "monitors"
     }
     /**
      * @static
-     * @param {{ x: number, y: number, width: number, height: number }}
+     * @param {CustomHotkey.Util.Rect} rect
      * @param {CoordinatesOrigin} origin
      * @return {{ x: number, y: number}}
      */
     getPositionByOrigin(rect, origin) {
-      x := rect.x
-      y := rect.y
-      width := rect.width
-      height := rect.height
-      width_half := Floor(width / 2)
-      height_half := Floor(height / 2)
-      x2 := x + width
-      y2 := y + height
+      x := rect.x1
+      y := rect.y1
+      x2 := rect.x2
+      y2 := rect.y2
+      width_half := Floor(rect.width / 2)
+      height_half := Floor(rect.height / 2)
 
-      if (origin ~= "i)^(window|screen|monitor|caret|mouse)(-top-left)?$") {
-        return { x: x, y: y }
-      }
-      else if (origin ~= "i)^(window|screen|monitor|caret|mouse)-top(-center)?$") {
+      if (origin ~= "-top(-center)?$") {
         return { x: x + width_half, y: y }
       }
-      if (origin ~= "i)^(window|screen|monitor|caret|mouse)-top-right$") {
+      else if (origin ~= "-top-left$") {
+        return { x: x, y: y }
+      }
+      else if (origin ~= "-top-right$") {
         return { x: x2, y: y }
       }
-      else if (origin ~= "i)^(window|screen|monitor|caret|mouse)-(middle-)?right$") {
-        return { x: x2, y: y + height_half }
-      }
-      else if (origin ~= "i)^(window|screen|monitor|caret|mouse)-bottom-right$") {
-        return { x: x2, y: y2 }
-      }
-      else if (origin ~= "i)^(window|screen|monitor|caret|mouse)-bottom(-center)?$") {
-        return { x: x + width_half, y: y2 }
-      }
-      else if (origin ~= "i)^(window|screen|monitor|caret|mouse)-bottom-left$") {
+      else if (origin ~= "-bottom-left$") {
         return { x: x, y: y2 }
       }
-      else if (origin ~= "i)^(window|screen|monitor|caret|mouse)-(middle-)?left$") {
+      else if (origin ~= "-bottom-right$") {
+        return { x: x2, y: y2 }
+      }
+      else if (origin ~= "-(middle-)?right$") {
+        return { x: x2, y: y + height_half }
+      }
+      else if (origin ~= "-bottom(-center)?$") {
+        return { x: x + width_half, y: y2 }
+      }
+      else if (origin ~= "-(middle-)?left$") {
         return { x: x, y: y + height_half }
       }
-      else if (origin ~= "i)^(window|screen|monitor|caret|mouse)-(middle-)?center$") {
+      else if (origin ~= "-(middle-)?center$") {
         return { x: x + width_half, y: y + height_half }
       }
       else if (IsObject(origin)) {
         return { x: x + origin.x, y: y + origin.y }
+      }
+      else {
+        return { x: x, y: y }
       }
       return { x: "", y: "" }
     }
@@ -2412,11 +2561,14 @@ class Util {
       MouseGetPos, x, y
       CoordMode, Mouse, %bk%
 
-      return { x: x, y: y, width: CustomHotkey.Util.Coordinates.mouseCursorWidth, height: CustomHotkey.Util.Coordinates.mouseCursorHeight }
+      width := CustomHotkey.Util.Coordinates.mouseCursorWidth
+      height := CustomHotkey.Util.Coordinates.mouseCursorHeight
+      rect := new CustomHotkey.Util.Rect(x, y, width, height)
+      return rect
     }
     /**
      * @static
-     * @return {{ x: number, y: number, width: number, height: number }}
+     * @return {CustomHotkey.Util.Rect}
      */
     getCaretRect() {
       rect := CustomHotkey.Util.Coordinates.getCaretRectByAcc()
@@ -2426,13 +2578,13 @@ class Util {
 
       bk := A_CoordModeMouse
       CoordMode, Caret, Screen
-      rect := { x: A_CaretX, y: A_CaretY, width: 2, height: 2 }
+      rect := new CustomHotkey.Util.Rect(A_CaretX, A_CaretY, 2, 2)
       CoordMode, Caret, %bk%
       return rect
     }
     /**
      * @static
-     * @return {{ x: number, y: number, width: number, height: number }}
+     * @return {CustomHotkey.Util.Rect}
      */
     getCaretRectByAcc() {
       static module, VT_BYREF := 0x4000, VT_I4 := 3, BYREF_INT32 := VT_BYREF + VT_I4, OBJID_CARET := 0xFFFFFFF8
@@ -2464,26 +2616,30 @@ class Util {
       if (!(x || y || width || height)) {
         return
       }
-      return { x: x, y: y, width: width, height: height }
+      return new CustomHotkey.Util.Rect(x, y, width, height)
     }
     /**
      * @static
-     * @return {{ x: number, y: number }}
+     * @param {string} origin
+     * @return {CustomHotkey.Util.Rect}
      */
-    getScreenRect() {
-      x := 0
-      y := 0
-      width := A_ScreenWidth
-      height := A_ScreenHeight
-      return { x: x, y: y, width: width, height: height }
+    getScreenRect(origin) {
+      match := CustomHotkey.Util.regexMatch(origin, "i)^(screen|monitor)(-(?<target>\d|primary))")
+      if (!match || CustomHotkey.Util.equalsIgnoreCase(match.target, "primary")) {
+        monitorInfo := new CustomHotkey.Util.MonitorInfo()
+        return monitorInfo.rect
+      }
+
+      monitorInfo := new CustomHotkey.Util.MonitorInfo(match.target)
+      return monitorInfo.rect
     }
     /**
      * @static
-     * @return {{ x: number, y: number }}
+     * @return {CustomHotkey.Util.Rect}
      */
     getWindowRect() {
       WinGetPos, x, y, width, height, A
-      return { x: x, y: y, width: width, height: height }
+      return new CustomHotkey.Util.Rect(x, y, width, height)
     }
   }
   /**
@@ -3139,6 +3295,12 @@ class Util {
         return y
       }
     }
+    points {
+      get {
+        points := [ [ this.x1, this.y1 ], [ this.x2, this.y2 ] ]
+        return points
+      }
+    }
     ;; @type {number}
     x1 {
       get {
@@ -3181,7 +3343,7 @@ class Util {
     ;; @type {number}
     height {
       get {
-        height := this.y2 - this.x1
+        height := this.y2 - this.y1
         return height
       }
     }
@@ -3219,95 +3381,71 @@ class Util {
      * @param {[ [ number, number, string ], [ number, number, string ] ]} rect
      */
     __NEW(params*) {
-      defaultOrigin := "screen"
       if (4 <= params.length()) {
-        x1 := params[1]
-        y1 := params[2]
-        x2 := x1 + params[3]
-        y2 := y1 + params[4]
-        origin := CustomHotkey.Util.isNonEmptyField(params, 5) ? params[5] : defaultOrigin
-        this.pos1 := new CustomHotkey.Util.Coordinates(x1, y1, origin)
-        this.pos2 := new CustomHotkey.Util.Coordinates(x2, y2, origin)
+        ; __NEW(x: number, y: number, width: number, height: number)
+        x := params[1]
+        y := params[2]
+        width := params[3]
+        height := params[4]
+        this.pos1 := { x: x, y: y }
+        this.pos2 := { x: x + width, y: y + height }
       }
-      else if (  params.length() == 2
-              && CustomHotkey.Util.isArray(params[1])
-              && CustomHotkey.Util.isArray(params[2]) ) {
-        pos1 := params[1]
-        pos2 := params[2]
-        if (CustomHotkey.Util.isArray(pos1) && CustomHotkey.Util.isArray(pos1)) {
-          x1 := pos1[1]
-          y1 := pos1[2]
-          origin1 := CustomHotkey.Util.isNonEmptyField(params[1], 3) ? params[1][3] : defaultOrigin
-          x2 := pos2[1]
-          y2 := pos2[2]
-          origin2 := CustomHotkey.Util.isNonEmptyField(params[2], 3) ? params[2][3] : defaultOrigin
-          this.pos1 := new CustomHotkey.Util.Coordinates(x1, y1, origin1)
-          this.pos2 := new CustomHotkey.Util.Coordinates(x2, y2, origin2)
+      else if (params.length() == 2) {
+        point1 := params[1]
+        point2 := params[2]
+        ; __NEW([ x1: number, y1: number ], [ x2: number, y2: number ])
+        if (CustomHotkey.Util.isArray(point1) && CustomHotkey.Util.isArray(point2)) {
+          this.pos1 := { x: point1[1], y: point1[2] }
+          this.pos2 := { x: point2[1], y: point2[2] }
         }
+        ; __NEW({ x: number; y: number }, { x: number; y: number; })
         else {
-          x1 := pos1.x
-          y1 := pos1.y
-          origin1 := pos1.origin
-          x2 := pos2.x
-          y2 := pos2.y
-          origin2 := pos2.origin
-          this.pos1 := new CustomHotkey.Util.Coordinates(x1, y1, origin1)
-          this.pos2 := new CustomHotkey.Util.Coordinates(x2, y2, origin2)
+          this.pos1 := { x: point1.x, y: point1.y }
+          this.pos2 := { x: point2.x, y: point2.y }
         }
       }
       else if (params.length() == 1 && CustomHotkey.Util.isArray(params[1])) {
-        rect := params[1]
-        if (CustomHotkey.Util.isArray(rect[1])) {
-          x1 := rect[1][1]
-          y1 := rect[1][2]
-          origin1 := CustomHotkey.Util.isNonEmptyField(rect[1], 3) ? rect[1][3] : defaultOrigin
-          x2 := rect[2][1]
-          y2 := rect[2][2]
-          origin2 := CustomHotkey.Util.isNonEmptyField(rect[2], 3) ? rect[2][3] : defaultOrigin
-          this.pos1 := new CustomHotkey.Util.Coordinates(x1, y1, origin1)
-          this.pos2 := new CustomHotkey.Util.Coordinates(x2, y2, origin2)
+        point1 := params[1][1]
+        point2 := params[1][2]
+        ; __NEW([ [ x: number, y: number ], [ x: number, y: number ] ])
+        if (CustomHotkey.Util.isArray(point1) && CustomHotkey.Util.isArray(point2)) {
+          this.pos1 := { x: point1[1], y: point1[2] }
+          this.pos2 := { x: point2[1], y: point2[2] }
         }
+        ; __NEW([ { x: number; y: number }, { x: number; y: number; } ])
         else {
-          x1 := rect[1].x
-          y1 := rect[1].y
-          origin1 := CustomHotkey.Util.isNonEmptyField(rect[1], "origin") ? rect[1].origin : defaultOrigin
-          x2 := rect[2].x
-          y2 := rect[2].y
-          origin2 := CustomHotkey.Util.isNonEmptyField(rect[2], "origin") ? rect[2].origin : defaultOrigin
-
-          this.pos1 := new CustomHotkey.Util.Coordinates(x1, y1, origin1)
-          this.pos2 := new CustomHotkey.Util.Coordinates(x2, y2, origin2)
+          this.pos1 := { x: point1.x, y: point1.y }
+          this.pos2 := { x: point2.x, y: point2.y }
         }
       }
+      ; __NEW({ x: number; y: number, width: number; height: number })
       else if (params.length() == 1 && IsObject(params[1])) {
         rect := params[1]
-        x1 := rect.x
-        y1 := rect.y
-        x2 := x1 + (CustomHotkey.isNonEmpty(rect.width) ? rect.width : rect.w)
-        y2 := y1 + (CustomHotkey.isNonEmpty(rect.height) ? rect.height : rect.h)
-        origin := CustomHotkey.Util.isNonEmptyField(params, 5) ? params[5] : defaultOrigin
+        x := rect.x
+        y := rect.y
+        width := CustomHotkey.isNonEmpty(rect.width) ? rect.width : rect.w
+        height := CustomHotkey.isNonEmpty(rect.height) ? rect.height : rect.h
 
-        this.pos1 := new CustomHotkey.Util.Coordinates(x1, y1, origin)
-        this.pos2 := new CustomHotkey.Util.Coordinates(x2, y2, origin)
+        this.pos1 := { x: x, y: y }
+        this.pos2 := { x: x + width, y: y + height }
       }
-      else {
-        rectString := params[1]
-        if (CustomHotkey.Util.equalsIgnoreCase(rectString, "window")) {
-          this.pos1 := new CustomHotkey.Util.Coordinates(0, 0, "window-top-left")
-          this.pos2 := new CustomHotkey.Util.Coordinates(0, 0, "window-bottom-right")
-        }
-        else if (CustomHotkey.Util.equalsIgnoreCase(rectString, "screen")) {
-          this.pos1 := new CustomHotkey.Util.Coordinates(0, 0, "screen-top-left")
-          this.pos2 := new CustomHotkey.Util.Coordinates(0, 0, "screen-bottom-right")
-        }
-      }
-      this.origin := "screen"
     }
+    /**
+     * @param {[ [ number, number ], [ number, number ] ]} rect
+     * @return {boolean}
+     */
+    /**
+     * @param {{ x1: number; y1: number; x2: number; y2: number }} rect
+     * @return {boolean}
+     */
     /**
      * @param {CustomHotkey.Util.Rect} rect
      * @return {boolean}
      */
     contains(rect) {
+      if (!CustomHotkey.Util.instanceof(rect, CustomHotkey.Util.Rect)) {
+        rect := new CustomHotkey.Util.Rect(rect)
+      }
       if (  this.x1 <= rect.x1 && rect.x2 <= this.x2
         &&  this.y1 <= rect.y1 && rect.y2 <= this.y2 ) {
         return true

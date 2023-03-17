@@ -26,13 +26,13 @@
     this.executeAction({ button: button . " Down"
                        , x: from.x
                        , y: from.y
-                       , origin: "screen"
+                       , origin: "monitors"
                        , mode: data.mode
                        , speed: data.speed })
     this.executeAction({ button: button . " Up"
                        , x: to.x
                        , y: to.y
-                       , origin: "screen"
+                       , origin: "monitors"
                        , mode: data.mode
                        , speed: data.speed })
     if (CustomHotkey.Util.isNonEmpty(data.restore) || data.restore == 0) {
@@ -40,7 +40,7 @@
       if (data.restore < 0) {
         speed := Abs(data.restore)
       }
-      this.executeAction({ x: start.x, y: start.y, origin: "screen", speed: speed})
+      this.executeAction({ x: start.x, y: start.y, origin: "monitors", speed: speed})
     }
   }
 }

@@ -657,7 +657,6 @@ class CommandPaletteCombiAction extends CustomHotkey.ActionBase {
         wordMatches := wordMatchData.matches
         index_a := 1
         index_b := 1
-        prevMatchedIndex_a := 0
         allowMatchFirstLetterOfWord := true
         while (index_a <= chars_a.length()) {
           prevResult := results[results.length()]
@@ -682,7 +681,7 @@ class CommandPaletteCombiAction extends CustomHotkey.ActionBase {
                          , end: index_a + StrLen(char_a)
                          , isMatch: true
                          , containsWordFirstLetter: true  })
-            prevMatchedIndex_a := index_a
+
             index_a++
             index_b++
 
@@ -707,6 +706,9 @@ class CommandPaletteCombiAction extends CustomHotkey.ActionBase {
                            , end: index_a + StrLen(substring)
                            , isMatch: false
                            , containsWordFirstLetter: nextWordMatch.skippedWord })
+
+              nextWordMatchIndex := CustomHotkey.Util.findIndexArray(wordMatches, nextWordMatch)
+              wordMatches := CustomHotkey.Util.sliceArray(wordMatches, nextWordMatchIndex + 1)
               index_a := nextWordMatch.index
               allowMatchFirstLetterOfWord := true
               continue
@@ -723,7 +725,6 @@ class CommandPaletteCombiAction extends CustomHotkey.ActionBase {
                          , isMatch: true
                          , containsWordFirstLetter: false })
 
-            prevMatchedIndex_a := index_a
             index_a++
             index_b++
             allowMatchFirstLetterOfWord := true

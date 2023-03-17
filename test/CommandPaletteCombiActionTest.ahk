@@ -26,8 +26,8 @@ new CustomHotkey("RCtrl & 2", [ { command: "abc"
 new CustomHotkey("RCtrl & 3", [ { command: "menu", description: "ContextMenuCombiAction", action: [ { label: "a", action: "a" } ] }
                               , { command: "commandpalette", description: "CommandPaletteCombiAction", action: [ { command: "a", action: "a" } ] } ]).on()
 items := []
+items.push({ command: "abc-def", description: "ContextMenuCombiAction", action: "{ToolTip}FooBar" })
 items.push({ command: "foobar", description: "ContextMenuCombiAction", action: "{ToolTip}foobar" })
-items.push({ command: "FooBar", description: "ContextMenuCombiAction", action: "{ToolTip}FooBar" })
 items.push({ command: "FoobarBar", description: "ContextMenuCombiAction", action: "{ToolTip}FoobarBar" })
 items.push({ command: "FboobarBar", description: "ContextMenuCombiAction", action: "{ToolTip}FboobarBar" })
 items.push({ command: "Foo-Bar", description: "CommandPaletteCombiAction", action: "{ToolTip}Foo-Bar" })
@@ -36,8 +36,8 @@ items.push({ command: "Foo/Bar", description: "CommandPaletteCombiAction", actio
 items.push({ command: "Foo\Bar", description: "CommandPaletteCombiAction", action: "{ToolTip}Foo\Bar" })
 items.push({ command: "Foo\Bar", description: "CommandPaletteCombiAction", action: "{ToolTip}Foo\Bar" })
 items.push({ command: "Foo.Bar", description: "CommandPaletteCombiAction", action: "{ToolTip}Foo.Bar" })
-items.push({ command: "FooBarAor", description: "ContextMenuCombiAction", action: "{ToolTip}foobar" })
-items.push({ command: "FooAorBar", description: "ContextMenuCombiAction", action: "{ToolTip}FooBar" })
+items.push({ command: "FooBarQux", description: "ContextMenuCombiAction", action: "{ToolTip}foobar" })
+items.push({ command: "FooBazQux", description: "ContextMenuCombiAction", action: "{ToolTip}FooBar" })
 new CustomHotkey("RCtrl & 4", items).on()
 new CustomHotkey("RCtrl & 5", { items: Func("CreateList") }).on()
 CreateList() {

@@ -8,6 +8,7 @@ new CustomHotkey("RCtrl & 4", "{Paste|R}{{SelectedText}:L}").on()
 new CustomHotkey("RCtrl & 5", "{Paste|R}{{SelectedText}:T}").on()
 new CustomHotkey("RCtrl & 6", { trigger: "{Paste}!", shift: "{Paste|R}!{{SelectedText}}!"}).on()
 new CustomHotkey("RCtrl & 7", "{Paste|R}{A_YYYY}/{A_MM}/{A_DD}").on()
+new CustomHotkey("RCtrl & 8", "{Paste|R}<{{SelectedText}}>").on()
 
 new CustomHotkey("RCtrl & q", { paste: "{{SelectedText}:U}", replace: true }).on()
 new CustomHotkey("RCtrl & w", { paste: "{{SelectedText}:Q}", replace: true }).on()

@@ -13,6 +13,18 @@ Also want to check the development status, check the [commit history](https://gi
 
 ## \[Released]
 
+## [0.0.4] - 2023-xx-xx
+### Added
+* [#10](https://github.com/zero-plusplus/CustomHotkey.ahk/issues/10) Add MousePositionCondition
+* [#14](https://github.com/zero-plusplus/CustomHotkey.ahk/issues/14) Add the option to specify each monitor and primary monitor in `"monitor"` and `"screen"` of origin such as `"monitor-primary"` and `"monitor-1"`
+* [#20](https://github.com/zero-plusplus/CustomHotkey.ahk/issues/20) Add `"monitors"` (alias `"screens"`) to origin
+
+### Fixed
+* [#13](https://github.com/zero-plusplus/CustomHotkey.ahk/issues/13) Origin `"monitor"` and `"screen"` return coordinates of the primary monitor, instead of the active monitor
+* [#22](https://github.com/zero-plusplus/CustomHotkey.ahk/issues/22) CommandPaletteCombiAction is not searched correctly when searching for certain characters
+* [#23](https://github.com/zero-plusplus/CustomHotkey.ahk/issues/23) When using the `R` option in PasteAction etc., if the string to expand contains a string such as `${abc}`, it will not be embedded correctly
+* [#24](https://github.com/zero-plusplus/CustomHotkey.ahk/issues/24) ExitAllAction does not terminate some AutoHotkey scripts
+
 ## [0.0.3] - 2022-10-30
 ### Fixed
 * [#15](https://github.com/zero-plusplus/CustomHotkey.ahk/issues/15) Hotkey options not set on CustomHotkey constructor
@@ -33,6 +45,7 @@ First released
 [Semantic Versioning]: https://semver.org/
 
 <!-- Versions -->
-[0.0.2]: https://github.com/zero-plusplus/CustomHotkey.ahk/compare/v0.0.2..v0.0.3
+[0.0.4]: https://github.com/zero-plusplus/CustomHotkey.ahk/compare/v0.0.3..v0.0.4
+[0.0.3]: https://github.com/zero-plusplus/CustomHotkey.ahk/compare/v0.0.2..v0.0.3
 [0.0.2]: https://github.com/zero-plusplus/CustomHotkey.ahk/compare/v0.0.1..v0.0.2
 [0.0.1]: https://github.com/zero-plusplus/CustomHotkey.ahk/tree/v0.0.1
