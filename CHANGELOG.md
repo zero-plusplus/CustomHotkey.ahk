@@ -13,7 +13,7 @@ Also want to check the development status, check the [commit history](https://gi
 
 ## \[Released]
 
-## [0.0.4] - 2023-xx-xx
+## [0.0.4] - 2023-03-17
 ### Added
 * [#10](https://github.com/zero-plusplus/CustomHotkey.ahk/issues/10) Add MousePositionCondition
 * [#14](https://github.com/zero-plusplus/CustomHotkey.ahk/issues/14) Add the option to specify each monitor and primary monitor in `"monitor"` and `"screen"` of origin such as `"monitor-primary"` and `"monitor-1"`
