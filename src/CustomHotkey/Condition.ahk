@@ -1,13 +1,13 @@
 ﻿class Condition extends CustomHotkey.Util.Functor {
   ;; @type {CustomHotkey.ConditionBase[]}
-  static _items := [ CustomHotkey.ImageCondition
-                   , CustomHotkey.ImeCondition
+  static _items := [ CustomHotkey.AndCondition
+                   , CustomHotkey.OrCondition
+                   , CustomHotkey.WindowCondition
+                   , CustomHotkey.ImageCondition
                    , CustomHotkey.MouseTimeIdleCondition
                    , CustomHotkey.MousePositionCondition
-                   , CustomHotkey.WindowCondition
-                   , CustomHotkey.AndCondition
-                   , CustomHotkey.OrCondition
-                   , CustomHotkey.CustomCondition ]
+                   , CustomHotkey.CustomCondition
+                   , CustomHotkey.ImeCondition ]
   __NEW(data, isSingleKey := false) {
     this.data := data
     this.condition := CustomHotkey.Condition.create(data)
