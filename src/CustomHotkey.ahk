@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @author zero-plusplus (https://github.com/zero-plusplus)
  * @repository https://github.com/zero-plusplus/CustomHotkey.ahk
  * @license MIT
