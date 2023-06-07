@@ -597,8 +597,8 @@ class CommandPaletteCombiAction extends CustomHotkey.ActionBase {
         matchBornus := BORNUS
         exactMatchBornus := BORNUS
         exactAllMatchBornus := BORNUS * 100
-        consecutiveBornus := BORNUS
-        wordConsecutiveBornus := BORNUS
+        consecutiveBornus := BORNUS * 5
+        wordConsecutiveBornus := BORNUS * 5
         startsWithBornus := BORNUS * 2
         firstLetterBornus := BORNUS * 10
 
@@ -629,7 +629,6 @@ class CommandPaletteCombiAction extends CustomHotkey.ActionBase {
             continue
           }
           startsWithBornus := 0
-          consecutiveBornus := 0
           isExactAll := false
         }
         if (isExactAll) {
